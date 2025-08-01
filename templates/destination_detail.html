@@ -236,7 +236,7 @@
         </button>
         {% else %}
         <a
-          href="{% url 'account_login' %}"
+          href="{% url 'authentication:login' %}"
           class="block w-full bg-gray-300 text-gray-600 font-semibold py-3 px-4 rounded-lg text-center"
         >
           Login to Book
@@ -587,7 +587,7 @@
         });
       });
 
-  const tourPrice = {{ destination.tour_price }};
+  const tourPrice = parseFloat("{{ destination.tour_price|add:'0' }}");
 
   function openBookingModal() {
     document.getElementById('bookingModal').classList.remove('hidden');
