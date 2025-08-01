@@ -1,0 +1,277 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<div class="min-h-screen bg-gray-50 py-12">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="text-center mb-8">
+      <!-- Success Icon -->
+      <div
+        class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4"
+      >
+        <svg
+          class="w-10 h-10 text-green-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          ></path>
+        </svg>
+      </div>
+
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Booking Confirmed!</h1>
+      <p class="text-gray-600">
+        Thank you for your booking. Your tour has been successfully confirmed.
+      </p>
+    </div>
+
+    <!-- Booking Details Card -->
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Booking Information -->
+        <div>
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Booking Details</h2>
+          <div class="space-y-3">
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Booking ID:</span>
+              <span class="font-medium"
+                >#{{ booking.id|stringformat:"05d" }}</span
+              >
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Destination:</span>
+              <span class="font-medium">{{ booking.destination.name }}</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Location:</span>
+              <span class="font-medium">
+                {{ booking.destination.location|default_if_none:"" }}, {{ booking.destination.district|default_if_none:"" }}
+              </span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Tour Date:</span>
+              <span class="font-medium"
+                >{{ booking.tour_date|date:"F d, Y" }}</span
+              >
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Duration:</span>
+              <span class="font-medium"
+                >{{ booking.destination.tour_duration_days }} day(s)</span
+              >
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Number of People:</span>
+              <span class="font-medium">{{ booking.number_of_people }}</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Contact Phone:</span>
+              <span class="font-medium">{{ booking.contact_phone }}</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Status:</span>
+              <span
+                class="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium"
+              >
+                {{ booking.status|title }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Information -->
+        <div>
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Payment Details</h2>
+          <div class="space-y-3">
+            {% if booking.payment %}
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Transaction ID:</span>
+              <span class="font-medium font-mono text-sm"
+                >{{ booking.payment.transaction_id }}</span
+              >
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Payment Method:</span>
+              <span class="font-medium"
+                >{{ booking.payment.payment_method|title }}</span
+              >
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Payment Status:</span>
+              <span
+                class="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium"
+              >
+                {{ booking.payment.status|title }}
+              </span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-gray-600">Payment Date:</span>
+              <span class="font-medium"
+                >{{ booking.payment.created_at|date:"F d, Y H:i" }}</span
+              >
+            </div>
+            {% endif %}
+            <div class="flex justify-between text-lg font-bold pt-2">
+              <span>Total Paid:</span>
+              <span class="text-primary">৳{{ booking.total_amount }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Special Requests -->
+      {% if booking.special_requests %}
+      <div class="mt-6 pt-6 border-t">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">
+          Special Requests
+        </h3>
+        <p class="text-gray-600 bg-gray-50 p-3 rounded-lg">
+          {{ booking.special_requests }}
+        </p>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Tour Package Details -->
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Tour Package Details</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Includes -->
+        {% if booking.destination.tour_includes %}
+        <div>
+          <h3
+            class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+          >
+            <svg
+              class="w-5 h-5 mr-2 text-green-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Includes
+          </h3>
+          <div class="text-gray-600 whitespace-pre-line">
+            {{ booking.destination.tour_includes }}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Excludes -->
+        {% if booking.destination.tour_excludes %}
+        <div>
+          <h3
+            class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+          >
+            <svg
+              class="w-5 h-5 mr-2 text-red-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Excludes
+          </h3>
+          <div class="text-gray-600 whitespace-pre-line">
+            {{ booking.destination.tour_excludes }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Important Information -->
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+      <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        Important Information
+      </h3>
+      <ul class="text-blue-700 space-y-2">
+        <li>
+          • Please arrive at the meeting point 30 minutes before the tour starts
+        </li>
+        <li>• Bring valid ID and this booking confirmation</li>
+        <li>• Contact us at least 24 hours in advance for any changes</li>
+        <li>• Weather conditions may affect the tour schedule</li>
+        <li>• Cancellation policy: 48 hours notice required for full refund</li>
+      </ul>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button
+        onclick="window.print()"
+        class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center justify-center"
+      >
+        <svg
+          class="w-5 h-5 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+          ></path>
+        </svg>
+        Print Confirmation
+      </button>
+
+      <a
+        href="{% url 'destination:destination_detail' booking.destination.slug %}"
+        class="bg-primary text-black px-6 py-3 rounded-lg hover:bg-yellow-500 transition duration-200 text-center"
+      >
+        Back to Destination
+      </a>
+
+      <a
+        href="{% url 'destination:destination_list' %}"
+        class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200 text-center"
+      >
+        Explore More Destinations
+      </a>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="text-center mt-8 text-gray-600">
+      <p class="mb-2">Need help? Contact us:</p>
+      <p class="font-medium">📧 support@travelbd.com | 📞 +880-XXX-XXXXXX</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+    body {
+      background: white !important;
+    }
+    .bg-gray-50 {
+      background: white !important;
+    }
+    .shadow-md {
+      box-shadow: none !important;
+    }
+  }
+</style>
+{% endblock %}
