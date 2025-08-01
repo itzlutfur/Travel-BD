@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel BD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include this in the <head> of your HTML -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#f0c040",
+              secondary: "#000000",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="bg-white flex flex-col items-center font-sans">
+    <header class="w-full lg:w-4/5 mx-auto">
+      <nav
+        class="flex items-center justify-between py-4 px-4 lg:px-8 relative z-20"
+      >
+        <!-- Logo -->
+        <div
+          class="text-xl lg:text-2xl font-extrabold text-gray-800 uppercase tracking-wide"
+        >
+          TRAVEL BD
+        </div>
+
+        <!-- Hamburger Menu -->
+        <div
+          class="hamburger flex flex-col gap-1 cursor-pointer lg:hidden"
+          id="hamburger"
+        >
+          <span
+            class="w-6 h-1 bg-gray-800 rounded transition-all duration-300"
+            id="line1"
+          ></span>
+          <span
+            class="w-6 h-1 bg-gray-800 rounded transition-all duration-300"
+            id="line2"
+          ></span>
+          <span
+            class="w-6 h-1 bg-gray-800 rounded transition-all duration-300"
+            id="line3"
+          ></span>
+        </div>
+
+        <!-- Navigation Links -->
+        <ul
+          class="nav-links hidden lg:flex gap-6 xl:gap-10 list-none text-base lg:text-lg"
+          id="navLinks"
+        >
+          <li>
+            <a
+              href="/"
+              class="text-gray-800 no-underline transition-colors duration-300 hover:text-primary"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="{% url 'destination:destination_list' %}"
+              class="text-gray-800 no-underline transition-colors duration-300 hover:text-primary"
+              >Destination</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-gray-800 no-underline transition-colors duration-300 hover:text-primary"
+              >Feature</a
+            >
+          </li>
+          <li>
+            <a
+              href="{% url 'about' %}"
+              class="text-gray-800 no-underline transition-colors duration-300 hover:text-primary"
+              >About Us</a
+            >
+          </li>
+        </ul>
+
+        <!-- Authentication Buttons (Desktop) -->
+        {% if user.is_authenticated %}
+        <div class="auth-buttons hidden lg:flex items-center gap-4">
+          <span
+            class="text-xs xl:text-sm text-gray-800 font-medium hidden xl:block"
+            >Welcome, {{ user.first_name|default:user.first_name }}!</span
+          >
+          <button
+            class="py-2 px-3 xl:px-4 bg-black border-none rounded-full text-xs xl:text-sm text-white cursor-pointer transition-colors duration-200 hover:bg-green-500"
+          >
+            <a
+              href="{% url 'authentication:dashboard' %}"
+              class="text-white no-underline"
+              >DASHBOARD</a
+            >
+          </button>
+        </div>
+        {% else %}
+        <div class="auth-buttons hidden lg:flex items-center gap-2">
+          <button
+            class="py-2 px-3 xl:px-4 bg-black border-none rounded-full text-xs xl:text-sm text-white cursor-pointer transition-colors duration-200 hover:bg-green-500"
+          >
+            <a
+              href="{% url 'authentication:login' %}"
+              class="text-white no-underline"
+              >LOG IN</a
+            >
+          </button>
+          <button
+            class="py-2 px-3 xl:px-4 bg-black border-none rounded-full text-xs xl:text-sm text-white cursor-pointer transition-colors duration-200 hover:bg-green-500"
+          >
+            <a
+              href="{% url 'authentication:register' %}"
+              class="text-white no-underline"
+              >SIGN UP</a
+            >
+          </button>
+        </div>
+        {% endif %}
+
+        <!-- Mobile Menu -->
+        <div
+          class="mobile-menu fixed inset-0 bg-black bg-opacity-50 z-30 hidden"
+          id="mobileMenu"
+        >
+          <div class="bg-white w-80 h-full ml-auto flex flex-col shadow-xl">
+            <!-- Mobile Menu Header -->
+            <div class="flex justify-between items-center p-4 border-b">
+              <span class="text-lg font-bold text-gray-800">TRAVEL BD</span>
+              <button class="close-menu text-2xl text-gray-600" id="closeMenu">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <!-- Mobile Navigation Links -->
+            <div class="flex-1 overflow-y-auto">
+              <ul class="flex flex-col py-4">
+                <li>
+                  <a
+                    href="/"
+                    class="block px-6 py-3 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >Home</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'destination:destination_list' %}"
+                    class="block px-6 py-3 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >Destination</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="block px-6 py-3 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >Feature</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'about' %}"
+                    class="block px-6 py-3 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    >About Us</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Mobile Authentication Section -->
+            <div class="border-t p-4">
+              {% if user.is_authenticated %}
+              <div class="space-y-3">
+                <p class="text-sm text-gray-600 text-center">
+                  Welcome, {{ user.first_name|default:user.first_name }}!
+                </p>
+                <a
+                  href="{% url 'authentication:dashboard' %}"
+                  class="block w-full py-3 px-4 bg-black text-white text-center rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                  >Dashboard</a
+                >
+                <a
+                  href="{% url 'authentication:logout' %}"
+                  class="block w-full py-3 px-4 bg-red-500 text-white text-center rounded-lg hover:bg-red-600 transition-colors duration-200"
+                  >Logout</a
+                >
+              </div>
+              {% else %}
+              <div class="space-y-3">
+                <a
+                  href="{% url 'authentication:login' %}"
+                  class="block w-full py-3 px-4 bg-black text-white text-center rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                  >Log In</a
+                >
+                <a
+                  href="{% url 'authentication:register' %}"
+                  class="block w-full py-3 px-4 bg-gray-200 text-gray-800 text-center rounded-lg hover:bg-gray-300 transition-colors duration-200"
+                  >Sign Up</a
+                >
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    {% block body %} {% endblock %}
+
+    <footer class="py-5 px-4 lg:px-10 font-sans w-full lg:w-4/5 mx-auto">
+      <div
+        class="flex flex-col lg:flex-row justify-between items-center gap-6 lg:gap-0 border-b border-gray-300 pb-5"
+      >
+        <div class="footer-intro text-center lg:text-left">
+          <h3 class="text-2xl lg:text-3xl font-bold text-black">
+            Leading the way<br />in adventure
+          </h3>
+        </div>
+
+        <div class="flex gap-4">
+          <a
+            href="#"
+            class="bg-white rounded-full w-9 h-9 flex justify-center items-center text-black text-base no-underline shadow-md"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a
+            href="#"
+            class="bg-white rounded-full w-9 h-9 flex justify-center items-center text-black text-base no-underline shadow-md"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            href="#"
+            class="bg-white rounded-full w-9 h-9 flex justify-center items-center text-black text-base no-underline shadow-md"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a
+            href="#"
+            class="bg-white rounded-full w-9 h-9 flex justify-center items-center text-black text-base no-underline shadow-md"
+            ><i class="fab fa-youtube"></i
+          ></a>
+        </div>
+
+        <div class="footer-newsletter text-center lg:text-left">
+          <h3 class="text-2xl lg:text-3xl font-bold text-black">
+            Join Our<br />Newsletter
+          </h3>
+          <form
+            class="flex items-center border-2 border-blue-500 rounded-full overflow-hidden max-w-xs mt-3 mx-auto lg:mx-0"
+          >
+            <input
+              type="email"
+              placeholder="Enter your e-mail"
+              class="border-none outline-none py-3 px-4 flex-1 text-sm"
+            />
+            <button
+              type="submit"
+              class="bg-black text-white border-none w-10 h-10 text-lg cursor-pointer"
+            >
+              →
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <hr class="my-5" />
+
+      <div
+        class="flex flex-col lg:flex-row justify-between gap-6 lg:gap-0 mt-5 pb-8"
+      >
+        <div class="flex-1 min-w-[200px] text-center lg:text-left">
+          <h4 class="font-semibold mb-3 text-black">Travel BD</h4>
+          <p class="text-gray-600 my-2 text-sm">
+            Travel plans are not really an instrument themselves but a delivery
+            mechanism or strategy for mostly others
+          </p>
+        </div>
+
+        <div class="flex-1 min-w-[200px] text-center lg:text-left">
+          <h4 class="font-semibold mb-3 text-black">Contact</h4>
+          <p class="text-gray-600 my-2 text-sm">+8801950307262</p>
+          <p class="text-gray-600 my-2 text-sm">info@travelBD.com</p>
+          <p class="text-gray-600 my-2 text-sm">support@travelBD.com</p>
+        </div>
+
+        <div class="flex-1 min-w-[200px] text-center lg:text-left">
+          <h4 class="font-semibold mb-3 text-black">Company</h4>
+          <p class="text-gray-600 my-2 text-sm">
+            <a href="" class="text-blue-500 no-underline">About us</a>
+          </p>
+          <p class="text-gray-600 my-2 text-sm">
+            <a href="" class="text-blue-500 no-underline">Features</a>
+          </p>
+          <p class="text-gray-600 my-2 text-sm">
+            <a href="" class="text-blue-500 no-underline">Careers</a>
+          </p>
+        </div>
+      </div>
+
+      <hr class="my-5" />
+
+      <p class="text-center text-gray-500 text-xs pt-5">
+        @2024 travelBD | All Rights Reserved by BangiCoders
+      </p>
+    </footer>
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const closeMenu = document.getElementById("closeMenu");
+      const line1 = document.getElementById("line1");
+      const line2 = document.getElementById("line2");
+      const line3 = document.getElementById("line3");
+
+      // Function to open mobile menu
+      function openMobileMenu() {
+        mobileMenu.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+
+        // Animate hamburger to X
+        line1.style.transform = "rotate(45deg) translate(5px, 5px)";
+        line2.style.opacity = "0";
+        line3.style.transform = "rotate(-45deg) translate(7px, -6px)";
+      }
+
+      // Function to close mobile menu
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+        document.body.style.overflow = "auto";
+
+        // Reset hamburger animation
+        line1.style.transform = "none";
+        line2.style.opacity = "1";
+        line3.style.transform = "none";
+      }
+
+      // Event listeners
+      hamburger.addEventListener("click", openMobileMenu);
+      closeMenu.addEventListener("click", closeMobileMenu);
+
+      // Close menu when clicking outside
+      mobileMenu.addEventListener("click", (e) => {
+        if (e.target === mobileMenu) {
+          closeMobileMenu();
+        }
+      });
+
+      // Close menu when clicking on a link
+      const mobileLinks = mobileMenu.querySelectorAll("a");
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+
+      // Handle window resize
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 1024) {
+          closeMobileMenu();
+        }
+      });
+
+      // Existing login/signup tab functionality
+      const loginTab = document.getElementById("loginTab");
+      const signupTab = document.getElementById("signupTab");
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+
+      if (loginTab && signupTab && loginForm && signupForm) {
+        loginTab.addEventListener("click", () => {
+          loginTab.classList.add("active");
+          signupTab.classList.remove("active");
+          loginForm.classList.add("active");
+          signupForm.classList.remove("active");
+        });
+
+        signupTab.addEventListener("click", () => {
+          signupTab.classList.add("active");
+          loginTab.classList.remove("active");
+          signupForm.classList.add("active");
+          loginForm.classList.remove("active");
+        });
+      }
+    </script>
+  </body>
+</html>

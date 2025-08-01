@@ -1,0 +1,425 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!-- Hero Section with Image -->
+<div class="relative w-full h-96 lg:h-[500px] overflow-hidden">
+  {% if destination.main_image %}
+  <img
+    src="{{ destination.main_image.url }}"
+    alt="{{ destination.name }}"
+    class="w-full h-full object-cover"
+  />
+  {% else %}
+  <div
+    class="w-full h-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center"
+  >
+    <div class="text-center text-white">
+      <svg
+        class="w-24 h-24 mx-auto mb-4 opacity-50"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      <p class="text-xl">No image available</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Overlay with title -->
+  <div class="absolute inset-0 bg-black bg-opacity-40 flex items-end">
+    <div class="w-full lg:w-4/5 mx-auto px-4 lg:px-8 pb-8">
+      <div class="text-white">
+        {% if destination.featured %}
+        <span
+          class="inline-block bg-primary text-black px-4 py-2 rounded-full text-sm font-semibold mb-4"
+        >
+          Featured Destination
+        </span>
+        {% endif %}
+        <h1 class="text-3xl lg:text-5xl font-bold mb-2">
+          {{ destination.name }}
+        </h1>
+        <p class="text-lg lg:text-xl flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          {{ destination.location }}, {{ destination.district }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="w-full lg:w-4/5 mx-auto px-4 lg:px-8 py-12">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <!-- Main Content Column -->
+    <div class="lg:col-span-2">
+      <!-- Quick Info Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div
+          class="bg-white border border-gray-200 rounded-lg p-4 text-center shadow-sm"
+        >
+          <div class="text-2xl font-bold text-primary mb-1">
+            {% if destination.entry_fee > 0 %}
+            <div>৳{{ destination.entry_fee }}</div>
+            {% else %} Free {% endif %}
+          </div>
+          <div class="text-sm text-gray-600">Entry Fee</div>
+        </div>
+
+        <div
+          class="bg-white border border-gray-200 rounded-lg p-4 text-center shadow-sm"
+        >
+          <div class="text-2xl font-bold text-gray-800 mb-1">
+            {{ destination.duration }}
+          </div>
+          <div class="text-sm text-gray-600">Duration</div>
+        </div>
+
+        <div
+          class="bg-white border border-gray-200 rounded-lg p-4 text-center shadow-sm"
+        >
+          <div class="text-2xl font-bold text-gray-800 mb-1">
+            {{ destination.difficulty_level|title }}
+          </div>
+          <div class="text-sm text-gray-600">Difficulty</div>
+        </div>
+
+        <div
+          class="bg-white border border-gray-200 rounded-lg p-4 text-center shadow-sm"
+        >
+          <div class="text-2xl font-bold text-gray-800 mb-1">
+            {{ destination.category|title }}
+          </div>
+          <div class="text-sm text-gray-600">Category</div>
+        </div>
+      </div>
+
+      <!-- Description Section -->
+      <div
+        class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8"
+      >
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          About {{ destination.name }}
+        </h2>
+        <p class="text-gray-700 leading-relaxed whitespace-pre-line">
+          {{ destination.description }}
+        </p>
+      </div>
+
+      <!-- Gallery Section -->
+      {% if destination.get_gallery_images %}
+      <div
+        class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8"
+      >
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Gallery</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {% for image in destination.get_gallery_images %}
+          <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+            <img
+              src="{{ image.url }}"
+              alt="{{ destination.name }} Gallery"
+              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div
+              class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center"
+            >
+              <svg
+                class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Best Time to Visit -->
+      <div
+        class="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-6 mb-8"
+      >
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            class="w-6 h-6 mr-2 text-blue-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            ></path>
+          </svg>
+          Best Time to Visit
+        </h2>
+        <p class="text-lg text-gray-700 font-medium">
+          {{ destination.best_time_to_visit }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="lg:col-span-1">
+      <!-- Location Map Placeholder -->
+      {% if destination.latitude and destination.longitude %}
+      <div
+        class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6"
+      >
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Location</h3>
+        <div
+          class="bg-gray-200 h-48 rounded-lg flex items-center justify-center"
+        >
+          <div class="text-center text-gray-600">
+            <svg
+              class="w-12 h-12 mx-auto mb-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <p class="text-sm">Map Location</p>
+            <p class="text-xs">Lat: {{ destination.latitude }}</p>
+            <p class="text-xs">Lng: {{ destination.longitude }}</p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Quick Details -->
+      <div
+        class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6"
+      >
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Quick Details</h3>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-600">District:</span>
+            <span class="font-medium text-gray-800"
+              >{{ destination.district }}</span
+            >
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Division:</span>
+            <span class="font-medium text-gray-800"
+              >{{ destination.division }}</span
+            >
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Category:</span>
+            <span
+              class="inline-block bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-sm"
+            >
+              {{ destination.category|title }}
+            </span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Difficulty:</span>
+            <span
+              class="inline-block {% if destination.difficulty_level == 'easy' %}bg-green-100 text-green-800{% elif destination.difficulty_level == 'moderate' %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %} px-2 py-1 rounded-full text-sm"
+            >
+              {{ destination.difficulty_level|title }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Share Section -->
+      <div
+        class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6"
+      >
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Share This Place</h3>
+        <div class="flex space-x-3">
+          <button
+            class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition duration-200 text-sm"
+          >
+            <i class="fab fa-facebook-f mr-1"></i> Facebook
+          </button>
+          <button
+            class="flex-1 bg-blue-400 text-white py-2 px-3 rounded-lg hover:bg-blue-500 transition duration-200 text-sm"
+          >
+            <i class="fab fa-twitter mr-1"></i> Twitter
+          </button>
+        </div>
+        <button
+          class="w-full mt-3 bg-gray-100 text-gray-800 py-2 px-3 rounded-lg hover:bg-gray-200 transition duration-200 text-sm"
+        >
+          <i class="fas fa-link mr-1"></i> Copy Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Destinations -->
+  {% if related_destinations %}
+  <div class="mt-16">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      You Might Also Like
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for related in related_destinations %}
+      <div
+        class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300"
+      >
+        <div class="relative h-48 overflow-hidden">
+          {% if related.main_image %}
+          <img
+            src="{{ related.main_image.url }}"
+            alt="{{ related.name }}"
+            class="w-full h-full object-cover hover:scale-105 transition duration-300"
+          />
+          {% else %}
+          <div
+            class="w-full h-full bg-gray-200 flex items-center justify-center"
+          >
+            <svg
+              class="w-12 h-12 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </div>
+          {% endif %}
+          <span
+            class="absolute top-3 right-3 bg-black bg-opacity-75 text-white px-2 py-1 rounded-full text-xs"
+          >
+            {{ related.category|title }}
+          </span>
+        </div>
+        <div class="p-4">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            <a
+              href="{% url 'destination:destination_detail' related.slug %}"
+              class="hover:text-primary transition duration-200"
+            >
+              {{ related.name }}
+            </a>
+          </h3>
+          <p class="text-gray-600 text-sm mb-3 flex items-center">
+            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            {{ related.district }}
+          </p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-medium text-gray-800">
+              {% if related.entry_fee > 0 %} ৳{{ related.entry_fee }} {% else %}
+              Free {% endif %}
+            </span>
+            <a
+              href="{% url 'destination:destination_detail' related.slug %}"
+              class="text-primary hover:text-yellow-600 text-sm font-medium transition duration-200"
+            >
+              View Details →
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Back to All Destinations -->
+  <div class="mt-12 text-center">
+    <a
+      href="{% url 'destination:destination_list' %}"
+      class="inline-flex items-center px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition duration-200"
+    >
+      <svg
+        class="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        ></path>
+      </svg>
+      Back to All Destinations
+    </a>
+  </div>
+</div>
+
+<script>
+  // Simple gallery click functionality
+  document.querySelectorAll(".group").forEach((item) => {
+    item.addEventListener("click", function () {
+      const img = this.querySelector("img");
+      if (img) {
+        // Simple image preview (you can replace this with a proper lightbox)
+        const modal = document.createElement("div");
+        modal.className =
+          "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50";
+        modal.innerHTML = `
+          <div class="relative max-w-4xl max-h-full p-4">
+            <img src="${img.src}" alt="${img.alt}" class="max-w-full max-h-full object-contain">
+            <button class="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75" onclick="this.parentElement.parentElement.remove()">
+              ×
+            </button>
+          </div>
+        `;
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.remove();
+          }
+        });
+        document.body.appendChild(modal);
+      }
+    });
+  });
+
+  // Copy link functionality
+  document
+    .querySelector("button:has(.fa-link)")
+    .addEventListener("click", function () {
+      navigator.clipboard.writeText(window.location.href).then(function () {
+        const button = document.querySelector("button:has(.fa-link)");
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+        button.classList.add("bg-green-100", "text-green-800");
+        setTimeout(() => {
+          button.innerHTML = originalText;
+          button.classList.remove("bg-green-100", "text-green-800");
+        }, 2000);
+      });
+    });
+</script>
+
+{% endblock %}

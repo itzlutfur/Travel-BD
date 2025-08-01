@@ -1,0 +1,146 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!-- about us -->
+<div class="w-4/5 mx-auto">
+  <section class="max-w-4xl my-12">
+    <h1 class="text-6xl font-bold mb-10 text-black">About Us</h1>
+
+    <div class="flex items-start mb-8">
+      <div class="text-4xl mr-5 mt-2">📍</div>
+      <div>
+        <h2 class="text-3xl font-bold mb-3 text-black">Location</h2>
+        <p class="text-base mt-3 text-gray-600">
+          Bangi tower, Dhanmondi 32, Bangladesh
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-start mb-8">
+      <div class="text-4xl mr-5 mt-2">📑</div>
+      <div>
+        <h2 class="text-3xl font-bold mb-3 text-black">Description</h2>
+        <p class="text-base mt-3 text-gray-600">
+          Welcome to Your Travel Agency, where adventure begins! We are a team
+          of passionate travel enthusiasts dedicated to providing you with
+          unforgettable travel experiences. Whether you're seeking relaxation on
+          a tropical beach, exploring ancient ruins, or embarking on thrilling
+          adventures, we've got you covered.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-start mb-8">
+      <div class="text-4xl mr-5 mt-2">🛎️</div>
+      <div>
+        <h2 class="text-3xl font-bold mb-3 text-black">Our Services</h2>
+        <p class="text-base mt-3 text-gray-600">
+          At Your Travel Agency, we offer a wide range of services to cater to
+          your travel needs:
+        </p>
+        <ul class="list-none pl-0 mt-3">
+          <li class="text-base text-green-700 my-2">✔️ Hotel reservations</li>
+          <li class="text-base text-green-700 my-2">✔️ Local Guide booking</li>
+          <li class="text-base text-green-700 my-2">✔️ Car rentals</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <div class="flex items-start mb-8">
+    <div class="text-4xl mr-5 mt-2">💡</div>
+    <div>
+      <h2 class="text-3xl font-bold mb-3 text-black">Why Choose Us?</h2>
+      <p class="text-base mt-3 text-gray-600">
+        Here are a few reasons why you should choose us for your next adventure:
+      </p>
+      <ul class="list-none pl-0 mt-3">
+        <li class="text-base text-gray-800 my-2">
+          ✔️ Experienced and knowledgeable staff
+        </li>
+        <li class="text-base text-gray-800 my-2">
+          ✔️ Personalized service tailored to your preferences
+        </li>
+        <li class="text-base text-gray-800 my-2">
+          ✔️ Extensive network of trusted partners and suppliers
+        </li>
+        <li class="text-base text-gray-800 my-2">
+          ✔️ Competitive prices and special offers
+        </li>
+        <li class="text-base text-gray-800 my-2">✔️ 24/7 customer support</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Our Team Section -->
+  <div class="flex items-start mb-8">
+    <div class="text-4xl mr-5 mt-2">👥</div>
+    <div>
+      <h2 class="text-3xl font-bold mb-3 text-black">Our Team</h2>
+      <p class="text-base mt-3 text-gray-600">
+        We have a team of dedicated professionals who are passionate about
+        travel and are committed to making your journey memorable. Get to know
+        our team:
+      </p>
+      <div class="flex gap-10 mt-5 flex-wrap">
+        <div class="text-center max-w-[150px]">
+          <img
+            src="{% static 'images/tanvir.png' %}"
+            alt="Tanvir"
+            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
+          />
+          <h3 class="my-3 text-xl font-semibold text-black">
+            Lutfur Rahman Tanvir
+          </h3>
+          <p class="m-0 text-sm text-gray-600">CTO</p>
+        </div>
+        <div class="text-center max-w-[150px]">
+          <img
+            src="{% static 'images/guide.jpg' %}"
+            alt="Rachin"
+            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
+          />
+          <h3 class="my-3 text-xl font-semibold text-black">Rachin</h3>
+          <p class="m-0 text-sm text-gray-600">CEO</p>
+        </div>
+        <div class="text-center max-w-[150px]">
+          <img
+            src="{% static 'images/guide.jpg' %}"
+            alt="Ibrahim"
+            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
+          />
+          <h3 class="my-3 text-xl font-semibold text-black">Ibrahim</h3>
+          <p class="m-0 text-sm text-gray-600">Security guard</p>
+        </div>
+        <div class="text-center max-w-[150px]">
+          <img
+            src="{% static 'images/guide.jpg' %}"
+            alt="Sunny"
+            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
+          />
+          <h3 class="my-3 text-xl font-semibold text-black">Sunny</h3>
+          <p class="m-0 text-sm text-gray-600">Delivery boy</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Us Section -->
+  <div class="flex items-start mb-8">
+    <div class="text-4xl mr-5 mt-2">👤</div>
+    <div>
+      <h2 class="text-3xl font-bold mb-3 text-black">Contact Us</h2>
+      <p class="text-base mt-3 text-gray-600">
+        Have a question or ready to start planning your next adventure? Contact
+        us today:
+      </p>
+      <ul class="list-none pl-0 mt-3">
+        <li class="text-base text-gray-800 my-2">✔️ Email: info@bangi.com</li>
+        <li class="text-base text-gray-800 my-2">✔️ Phone: +8801950000000</li>
+        <li class="text-base text-gray-800 my-2">
+          ✔️ Address: Bangi tower, Dhanmondi 32, Bangladesh
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,259 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!-- Hero Section -->
+<div class="bg-gray-100 w-full">
+  <div class="w-4/5 mx-auto pt-28">
+    <h1
+      class="text-6xl md:text-8xl font-bold mb-5 text-center text-black leading-tight"
+    >
+      Lifelong Memories Just A Few Days Away
+    </h1>
+    <section class="flex justify-between items-center py-10 flex-wrap">
+      <div class="flex-1">
+        <img
+          src="{% static 'images/Heroimage.png' %}"
+          class="w-full max-w-[620px]"
+        />
+      </div>
+      <div class="flex-1 pl-10">
+        <div class="flex flex-col gap-5">
+          <div class="flex items-center gap-4">
+            <img
+              src="{% static 'images/room.jpeg' %}"
+              alt="Room"
+              class="w-20 h-20 rounded-full object-cover"
+            />
+            <div class="feature-text">
+              <h3 class="m-0 text-2xl font-bold text-black">Room Booking</h3>
+              <p class="mt-4 text-gray-600 text-sm">
+                Book your favourite room in Chattagram
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <img
+              src="{% static 'images/guide.jpg' %}"
+              alt="Guide"
+              class="w-20 h-20 rounded-full object-cover"
+            />
+            <div class="feature-text">
+              <h3 class="m-0 text-2xl font-bold text-black">Local Guide</h3>
+              <p class="mt-4 text-gray-600 text-sm">Meet your Guide</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <img
+              src="{% static 'images/car.jpg' %}"
+              alt="Car"
+              class="w-20 h-20 rounded-full object-cover"
+            />
+            <div class="feature-text">
+              <h3 class="m-0 text-2xl font-bold text-black">Book your car</h3>
+              <p class="mt-4 text-gray-600 text-sm">
+                Start your journey today—no waiting, no hassle.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Discover Nature -->
+<section class="text-center py-16 px-5 bg-white w-4/5 mx-auto">
+  <h2 class="text-5xl font-bold mb-10 text-black">
+    Discover the touch of Nature
+  </h2>
+  <div class="flex justify-center flex-wrap gap-8">
+    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
+      <img
+        src="{% static 'images/cox.jpg' %}"
+        alt="Cox's Bazar"
+        class="w-full h-full object-cover block"
+      />
+      <div
+        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
+      >
+        📍 Cox's Bazar
+      </div>
+    </div>
+    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
+      <img
+        src="{% static 'images/saint.jpg' %}"
+        alt="Saint Martin"
+        class="w-full h-full object-cover block"
+      />
+      <div
+        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
+      >
+        📍 Saint Martin
+      </div>
+    </div>
+    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
+      <img
+        src="{% static 'images/ranga.jpg' %}"
+        alt="Rangamati"
+        class="w-full h-full object-cover block"
+      />
+      <div
+        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
+      >
+        📍 Rangamati
+      </div>
+    </div>
+    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
+      <img
+        src="{% static 'images/sajek.jpg' %}"
+        alt="Sajek Valley"
+        class="w-full h-full object-cover block"
+      />
+      <div
+        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
+      >
+        📍 Sajek Valley
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- services section -->
+<section
+  class="flex justify-between items-center py-20 px-10 flex-wrap bg-white gap-16"
+>
+  <div class="flex-1 min-w-80 max-w-[600px]">
+    <h2 class="text-7xl font-bold mb-10 text-black">
+      What services<br />we provide
+    </h2>
+
+    <div class="mb-8">
+      <h3 class="text-3xl mb-3 text-gray-900">
+        01. <strong>Travel Plan</strong>
+      </h3>
+      <p class="text-gray-600 text-base leading-relaxed">
+        Travel plans are not really an instrument themselves but a delivery
+        mechanism or strategy for mostly others
+      </p>
+    </div>
+
+    <div class="mb-8">
+      <h3 class="text-3xl mb-3 text-gray-900">
+        02. <strong>Car Booking</strong>
+      </h3>
+      <p class="text-gray-600 text-base leading-relaxed">
+        Discover your next ride with ease. Find great deals on local and
+        long-distance car bookings.
+      </p>
+    </div>
+
+    <div class="mb-8">
+      <h3 class="text-3xl mb-3 text-gray-900">
+        03. <strong>Accomodation</strong>
+      </h3>
+      <p class="text-gray-600 text-base leading-relaxed">
+        Lodging, food and services or travelling space and related services.
+      </p>
+    </div>
+  </div>
+
+  <div class="flex-1 relative min-w-72 h-[500px]">
+    <img
+      src="https://i.pinimg.com/736x/c3/d3/3c/c3d33c9944f7bdbe8b83d932afe1a58a.jpg"
+      class="absolute top-0 left-1/5 w-44 h-44 rounded-full object-cover"
+      alt=""
+    />
+    <img
+      src="https://images.unsplash.com/photo-1579991155656-4647abc8d4b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+      class="absolute top-[10%] left-[70%] w-70 h-70 rounded-full object-cover"
+      alt=""
+    />
+    <img
+      src="https://images.unsplash.com/photo-1526918761918-da528d9558c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1076&q=80"
+      class="absolute top-[45%] left-[30%] w-40 h-40 rounded-full object-cover"
+      alt=""
+    />
+    <img
+      src="https://images.unsplash.com/photo-1553697388-94e804e2f0f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"
+      class="absolute bottom-0 left-[70%] w-30 h-30 rounded-full object-cover"
+      alt=""
+    />
+  </div>
+</section>
+
+<!-- plan section -->
+<section
+  class="flex items-center justify-between py-20 px-5 gap-16 flex-wrap bg-white w-4/5 mx-auto"
+>
+  <div class="bg-yellow-400 rounded-3xl overflow-hidden max-w-md w-full">
+    <img
+      src="{% static 'images/Tourist.png' %}"
+      alt="Traveler with Passport"
+      class="w-full h-auto block"
+    />
+  </div>
+  <div class="max-w-lg text-left">
+    <h2 class="text-5xl font-bold text-black mb-5 leading-tight">
+      Plan easy,<br />Play Less &<br />experience more
+    </h2>
+    <p class="text-gray-600 text-base leading-relaxed">
+      Traveling is important in life because it will open you up to a new way of
+      living and being. You will experience new connections with people and
+      places and immerse in different cultures, which can help widen your
+      perspective.
+    </p>
+  </div>
+</section>
+
+<!-- Responsive styles for mobile -->
+<style>
+  @media (max-width: 900px) {
+    .w-4\/5 {
+      width: 90% !important;
+    }
+
+    .flex-wrap section {
+      flex-direction: column !important;
+      text-align: center !important;
+    }
+
+    .text-6xl {
+      font-size: 3rem !important;
+    }
+
+    .pl-10 {
+      padding-left: 0 !important;
+    }
+
+    .flex-wrap .flex {
+      flex-direction: column !important;
+      text-align: center !important;
+    }
+
+    .absolute {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 10px !important;
+    }
+
+    .w-44 {
+      width: 5rem !important;
+      height: 5rem !important;
+    }
+
+    .w-70 {
+      width: 11.25rem !important;
+      height: 11.25rem !important;
+    }
+
+    .w-40 {
+      width: 8.125rem !important;
+      height: 8.125rem !important;
+    }
+
+    .w-30 {
+      width: 6.25rem !important;
+      height: 6.25rem !important;
+    }
+  }
+</style>
+{% endblock %}

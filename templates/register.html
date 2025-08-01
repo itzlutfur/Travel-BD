@@ -1,0 +1,177 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<style>
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border: 2px solid #facc15;
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
+  }
+</style>
+<div
+  class="min-h-screen lg:w-1/2 bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+>
+  <div class="max-w-2xl w-full space-y-8">
+    <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-900">Create Account</h2>
+        <p class="mt-2 text-sm text-gray-600">
+          Join Travel BD and start exploring Bangladesh
+        </p>
+      </div>
+
+      <!-- Registration Form -->
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Two Column Layout for Name and Email -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Full Name Field -->
+          <div>
+            <label
+              for="{{ form.first_name.id_for_label }}"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Full Name
+            </label>
+            {{ form.first_name }} {% for error in form.first_name.errors %}
+            <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <label
+              for="{{ form.email.id_for_label }}"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Email Address
+            </label>
+            {{ form.email }} {% for error in form.email.errors %}
+            <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Two Column Layout for Passwords -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Password Field -->
+          <div>
+            <label
+              for="{{ form.password1.id_for_label }}"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Password
+            </label>
+            {{ form.password1 }} {% for error in form.password1.errors %}
+            <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div>
+            <label
+              for="{{ form.password2.id_for_label }}"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Confirm Password
+            </label>
+            {{ form.password2 }} {% for error in form.password2.errors %}
+            <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="flex items-center justify-start">
+          <input
+            id="terms"
+            name="terms"
+            type="checkbox"
+            required
+            class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded align-left"
+          />
+          <label for="terms" class="ml-2 block text-sm text-gray-700">
+            I agree to the
+            <a href="#" class="text-primary hover:text-yellow-500"
+              >Terms and Conditions</a
+            >
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4">
+          <button
+            type="submit"
+            class="group relative w-full flex justify-center py-4 px-6 border border-transparent text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-200"
+          >
+            Create Account
+          </button>
+        </div>
+
+        <!-- Login Link -->
+        <div class="text-center pt-4">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <a
+              href="{% url 'authentication:login' %}"
+              class="font-medium text-primary hover:text-yellow-500"
+            >
+              Sign in here
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Messages - Only show error messages on register page -->
+{% if messages %} {% for message in messages %} {% if message.tags == 'error' %}
+<div
+  id="errorModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+    <div class="text-center">
+      <div
+        class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4"
+      >
+        <svg
+          class="h-6 w-6 text-red-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+          />
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Registration Error</h3>
+      <p class="text-sm text-gray-500 mb-4">{{ message }}</p>
+      <button
+        onclick="closeModal('errorModal')"
+        class="w-full py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
+      >
+        Try Again
+      </button>
+    </div>
+  </div>
+</div>
+{% endif %} {% endfor %} {% endif %}
+
+<script>
+  function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.remove();
+    }
+  }
+</script>
+
+{% endblock %}
