@@ -1,0 +1,114 @@
+{% extends 'base.html' %} {%load static%} {% block body %}
+<div class="min-h-screen bg-gray-50 py-12">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-md p-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        Complete Your Payment
+      </h1>
+
+      <!-- Booking Summary -->
+      <div class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">Booking Summary</h2>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span>Destination:</span>
+            <span class="font-medium">{{ booking.destination.name }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Tour Date:</span>
+            <span class="font-medium">{{ booking.tour_date }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Number of People:</span>
+            <span class="font-medium">{{ booking.number_of_people }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Price per Person:</span>
+            <span class="font-medium"
+              >৳{{ booking.destination.tour_price }}</span
+            >
+          </div>
+          <hr class="my-3" />
+          <div class="flex justify-between text-lg font-bold">
+            <span>Total Amount:</span>
+            <span class="text-primary">৳{{ booking.total_amount }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Form -->
+      <form method="POST">
+        {% csrf_token %}
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold mb-4">Choose Payment Method</h3>
+          <div class="space-y-3">
+            <label
+              class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+            >
+              <input
+                type="radio"
+                name="payment_method"
+                value="bkash"
+                required
+                class="mr-3"
+              />
+              <img
+                src="{% static 'images/icons/bkash.svg' %}"
+                alt="bKash"
+                class="w-8 h-8 mr-3"
+                onerror="this.style.display='none'"
+              />
+              <span>bKash</span>
+            </label>
+            <label
+              class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+            >
+              <input
+                type="radio"
+                name="payment_method"
+                value="nagad"
+                required
+                class="mr-3"
+              />
+              <img
+                src="{% static 'images/icons/bkash.svg' %}"
+                alt="Nagad"
+                class="w-8 h-8 mr-3"
+                onerror="this.style.display='none'"
+              />
+              <span>Nagad</span>
+            </label>
+            <label
+              class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+            >
+              <input
+                type="radio"
+                name="payment_method"
+                value="card"
+                required
+                class="mr-3"
+              />
+              <span>💳 Credit/Debit Card</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex space-x-4">
+          <a
+            href="{% url 'destination:destination_detail' booking.destination.slug %}"
+            class="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg text-center hover:bg-gray-400"
+          >
+            Back
+          </a>
+          <button
+            type="submit"
+            class="flex-1 bg-primary text-black py-3 px-6 rounded-lg hover:bg-yellow-500"
+          >
+            Pay ৳{{ booking.total_amount }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

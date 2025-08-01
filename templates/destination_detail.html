@@ -180,6 +180,70 @@
 
     <!-- Sidebar -->
     <div class="lg:col-span-1">
+      <!-- Tour Package Card -->
+      <div
+        class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6 sticky top-4"
+      >
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Tour Package</h3>
+
+        <div class="text-center mb-6">
+          <div class="text-3xl font-bold text-primary mb-2">
+            ৳{{ destination.tour_price }}
+          </div>
+          <div class="text-sm text-gray-600">per person</div>
+          <div class="text-sm text-gray-500">
+            {{ destination.tour_duration_days }} day(s)
+          </div>
+        </div>
+
+        <!-- Tour Includes -->
+        {% if destination.tour_includes %}
+        <div class="mb-4">
+          <h4 class="font-semibold text-gray-800 mb-2">✅ Includes:</h4>
+          <div class="text-sm text-gray-600 whitespace-pre-line">
+            {{ destination.tour_includes }}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Tour Excludes -->
+        {% if destination.tour_excludes %}
+        <div class="mb-4">
+          <h4 class="font-semibold text-gray-800 mb-2">❌ Excludes:</h4>
+          <div class="text-sm text-gray-600 whitespace-pre-line">
+            {{ destination.tour_excludes }}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="border-t pt-4">
+          <div class="flex justify-between text-sm text-gray-600 mb-2">
+            <span>Max Group Size:</span>
+            <span>{{ destination.max_group_size }} people</span>
+          </div>
+          <div class="flex justify-between text-sm text-gray-600 mb-4">
+            <span>Duration:</span>
+            <span>{{ destination.tour_duration_days }} day(s)</span>
+          </div>
+        </div>
+
+        {% if user.is_authenticated %}
+        <button
+          onclick="openBookingModal()"
+          class="w-full bg-primary text-black font-semibold py-3 px-4 rounded-lg hover:bg-yellow-500 transition duration-200"
+        >
+          Book This Tour
+        </button>
+        {% else %}
+        <a
+          href="{% url 'account_login' %}"
+          class="block w-full bg-gray-300 text-gray-600 font-semibold py-3 px-4 rounded-lg text-center"
+        >
+          Login to Book
+        </a>
+        {% endif %}
+      </div>
+
       <!-- Location Map Placeholder -->
       {% if destination.latitude and destination.longitude %}
       <div
@@ -377,49 +441,179 @@
   </div>
 </div>
 
-<script>
-  // Simple gallery click functionality
-  document.querySelectorAll(".group").forEach((item) => {
-    item.addEventListener("click", function () {
-      const img = this.querySelector("img");
-      if (img) {
-        // Simple image preview (you can replace this with a proper lightbox)
-        const modal = document.createElement("div");
-        modal.className =
-          "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50";
-        modal.innerHTML = `
-          <div class="relative max-w-4xl max-h-full p-4">
-            <img src="${img.src}" alt="${img.alt}" class="max-w-full max-h-full object-contain">
-            <button class="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75" onclick="this.parentElement.parentElement.remove()">
-              ×
-            </button>
-          </div>
-        `;
-        modal.addEventListener("click", function (e) {
-          if (e.target === modal) {
-            modal.remove();
-          }
-        });
-        document.body.appendChild(modal);
-      }
-    });
-  });
+<!-- Booking Modal -->
+<div
+  id="bookingModal"
+  class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+>
+  <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold">Book Tour</h3>
+      <button
+        onclick="closeBookingModal()"
+        class="text-gray-500 hover:text-gray-700"
+      >
+        ✕
+      </button>
+    </div>
 
-  // Copy link functionality
-  document
-    .querySelector("button:has(.fa-link)")
-    .addEventListener("click", function () {
-      navigator.clipboard.writeText(window.location.href).then(function () {
-        const button = document.querySelector("button:has(.fa-link)");
-        const originalText = button.innerHTML;
-        button.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
-        button.classList.add("bg-green-100", "text-green-800");
-        setTimeout(() => {
-          button.innerHTML = originalText;
-          button.classList.remove("bg-green-100", "text-green-800");
-        }, 2000);
+    <form
+      method="POST"
+      action="{% url 'destination:book_tour' destination.slug %}"
+    >
+      {% csrf_token %}
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2"
+          >Tour Date</label
+        >
+        <input
+          type="date"
+          name="tour_date"
+          required
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2"
+          >Number of People</label
+        >
+        <select
+          name="number_of_people"
+          id="peopleCount"
+          onchange="updateTotal()"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+        >
+          {% for i in "123456789"|make_list %}
+          <option value="{{ forloop.counter }}">
+            {{ forloop.counter }} person{% if forloop.counter > 1 %}s{% endif %}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2"
+          >Contact Phone</label
+        >
+        <input
+          type="tel"
+          name="contact_phone"
+          required
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2"
+          >Special Requests (Optional)</label
+        >
+        <textarea
+          name="special_requests"
+          rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+        ></textarea>
+      </div>
+
+      <div class="border-t pt-4 mb-4">
+        <div class="flex justify-between items-center">
+          <span class="text-lg font-semibold">Total Amount:</span>
+          <span id="totalAmount" class="text-xl font-bold text-primary"
+            >৳{{ destination.tour_price }}</span
+          >
+        </div>
+      </div>
+
+      <div class="flex space-x-3">
+        <button
+          type="button"
+          onclick="closeBookingModal()"
+          class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="flex-1 bg-primary text-black py-2 px-4 rounded-lg hover:bg-yellow-500"
+        >
+          Proceed to Payment
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    // Simple gallery click functionality
+    document.querySelectorAll(".group").forEach((item) => {
+      item.addEventListener("click", function () {
+        const img = this.querySelector("img");
+        if (img) {
+          // Simple image preview (you can replace this with a proper lightbox)
+          const modal = document.createElement("div");
+          modal.className =
+            "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50";
+          modal.innerHTML = `
+            <div class="relative max-w-4xl max-h-full p-4">
+              <img src="${img.src}" alt="${img.alt}" class="max-w-full max-h-full object-contain">
+              <button class="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75" onclick="this.parentElement.parentElement.remove()">
+                ×
+              </button>
+            </div>
+          `;
+          modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+              modal.remove();
+            }
+          });
+          document.body.appendChild(modal);
+        }
       });
     });
+
+    // Copy link functionality
+    document
+      .querySelector("button:has(.fa-link)")
+      .addEventListener("click", function () {
+        navigator.clipboard.writeText(window.location.href).then(function () {
+          const button = document.querySelector("button:has(.fa-link)");
+          const originalText = button.innerHTML;
+          button.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+          button.classList.add("bg-green-100", "text-green-800");
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove("bg-green-100", "text-green-800");
+          }, 2000);
+        });
+      });
+
+  const tourPrice = {{ destination.tour_price }};
+
+  function openBookingModal() {
+    document.getElementById('bookingModal').classList.remove('hidden');
+    document.getElementById('bookingModal').classList.add('flex');
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelector('input[name="tour_date"]').setAttribute('min', today);
+  }
+
+  function closeBookingModal() {
+    document.getElementById('bookingModal').classList.add('hidden');
+    document.getElementById('bookingModal').classList.remove('flex');
+  }
+
+  function updateTotal() {
+    const peopleCount = document.getElementById('peopleCount').value;
+    const total = tourPrice * peopleCount;
+    document.getElementById('totalAmount').textContent = '৳' + total;
+  }
+
+  // Close modal when clicking outside
+  document.getElementById('bookingModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeBookingModal();
+    }
+  });
 </script>
 
 {% endblock %}
