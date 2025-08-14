@@ -80,7 +80,7 @@
             <a
               href="#"
               class="text-gray-800 no-underline transition-colors duration-300 hover:text-primary"
-              >Feature</a
+              >Hire Guide</a
             >
           </li>
           <li>
@@ -103,7 +103,7 @@
             class="py-2 px-3 xl:px-4 bg-black border-none rounded-full text-xs xl:text-sm text-white cursor-pointer transition-colors duration-200 hover:bg-green-500"
           >
             <a
-              href="{% url 'authentication:dashboard' %}"
+              href="{% url 'dashboard:dashboard' %}"
               class="text-white no-underline"
               >DASHBOARD</a
             >
@@ -167,7 +167,7 @@
                   <a
                     href="#"
                     class="block px-6 py-3 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                    >Feature</a
+                    >Hire Guide</a
                   >
                 </li>
                 <li>
@@ -188,7 +188,7 @@
                   Welcome, {{ user.first_name|default:user.first_name }}!
                 </p>
                 <a
-                  href="{% url 'authentication:dashboard' %}"
+                  href="{% url 'dashboard:dashboard' %}"
                   class="block w-full py-3 px-4 bg-black text-white text-center rounded-lg hover:bg-gray-800 transition-colors duration-200"
                   >Dashboard</a
                 >

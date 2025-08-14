@@ -1,6 +1,7 @@
 <!-- Main Content -->
-
 {% extends 'base.html' %} {% load static %} {% block body %}
+
+<!-- Main Dashboard Content -->
 <div class="min-h-screen bg-gray-50">
   <!-- Dashboard Header -->
   <div class="bg-white shadow-sm border-b">
@@ -21,16 +22,12 @@
             </div>
           </div>
           <div class="hidden lg:flex items-center space-x-4">
-            <button
+            <a
+              href="{% url 'destination:destination_list' %}"
               class="bg-primary text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition duration-200"
             >
               <i class="fas fa-plus mr-2"></i>New Booking
-            </button>
-            <button
-              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-200"
-            >
-              <i class="fas fa-cog mr-2"></i>Settings
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -39,26 +36,23 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Stats Cards Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-      <!-- Hotel Bookings Card -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Tour Bookings Card -->
       <div
         class="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition duration-200"
       >
         <div class="p-6">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600">Hotel Bookings</p>
+              <p class="text-sm font-medium text-gray-600">Tour Bookings</p>
               <p class="text-3xl font-bold text-gray-900 mt-2">
-                {{ hotel_bookings|length }}
-              </p>
-              <p class="text-sm text-green-600 mt-1">
-                <i class="fas fa-arrow-up text-xs"></i> Active bookings
+                {{ tour_count|default:0 }}
               </p>
             </div>
             <div
               class="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center"
             >
-              <i class="fas fa-hotel text-blue-600 text-xl"></i>
+              <i class="fas fa-map-marked-alt text-blue-600 text-xl"></i>
             </div>
           </div>
         </div>
@@ -71,12 +65,9 @@
         <div class="p-6">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600">Guide Bookings</p>
+              <p class="text-sm font-medium text-gray-600">Local Guides</p>
               <p class="text-3xl font-bold text-gray-900 mt-2">
-                {{ guide_bookings|length }}
-              </p>
-              <p class="text-sm text-green-600 mt-1">
-                <i class="fas fa-arrow-up text-xs"></i> Active guides
+                {{ guide_count|default:0 }}
               </p>
             </div>
             <div
@@ -88,25 +79,22 @@
         </div>
       </div>
 
-      <!-- Tour Bookings Card -->
+      <!-- Total Bookings Card -->
       <div
         class="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition duration-200"
       >
         <div class="p-6">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm font-medium text-gray-600">Tour Bookings</p>
+              <p class="text-sm font-medium text-gray-600">Total Bookings</p>
               <p class="text-3xl font-bold text-gray-900 mt-2">
-                {{ tour_bookings|length|default:0 }}
-              </p>
-              <p class="text-sm text-purple-600 mt-1">
-                <i class="fas fa-map-marked-alt text-xs"></i> Destinations
+                {{ total_bookings|default:0 }}
               </p>
             </div>
             <div
               class="h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center"
             >
-              <i class="fas fa-map-marked-alt text-purple-600 text-xl"></i>
+              <i class="fas fa-calendar-check text-purple-600 text-xl"></i>
             </div>
           </div>
         </div>
@@ -121,16 +109,15 @@
             <div>
               <p class="text-sm font-medium text-gray-600">Total Spent</p>
               <p class="text-3xl font-bold text-gray-900 mt-2">
-                ৳{{ total_spent|default:0 }}
-              </p>
-              <p class="text-sm text-primary mt-1">
-                <i class="fas fa-chart-line text-xs"></i> This month
+                ৳{{ total_spent|floatformat:0|default:0 }}
               </p>
             </div>
             <div
               class="h-12 w-12 bg-yellow-100 rounded-lg flex items-center justify-center"
             >
-              <i class="fas fa-dollar-sign text-primary text-xl"></i>
+              <i
+                class="fas fa-bangladeshi-taka-sign text-yellow-600 text-xl"
+              ></i>
             </div>
           </div>
         </div>
@@ -139,146 +126,312 @@
 
     <!-- Main Content Grid -->
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-      <!-- Left Column - Bookings -->
+      <!-- Left Column - Recent Bookings -->
       <div class="xl:col-span-2 space-y-8">
-        <!-- Hotel Bookings Section -->
+        <!-- Recent Tour Bookings -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200">
           <div class="px-6 py-4 border-b border-gray-200">
-            <div class="flex items-center justify-between">
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900">
-                  Hotel Bookings
-                </h3>
-                <p class="text-sm text-gray-600">
-                  Your current and upcoming hotel reservations
-                </p>
-              </div>
-              <button
-                class="text-primary hover:text-yellow-600 text-sm font-medium"
-              >
-                View All <i class="fas fa-arrow-right ml-1"></i>
-              </button>
-            </div>
+            <h3 class="text-lg font-semibold text-gray-900">Tour Bookings</h3>
+            <p class="text-sm text-gray-600">Your latest destination tours</p>
           </div>
           <div class="p-6">
-            {% if hotel_bookings %}
+            {% if recent_tour_bookings %}
             <div class="space-y-4">
-              {% for booking in hotel_bookings %}
+              {% for booking in recent_tour_bookings %}
+              <!-- Mobile-first responsive booking card -->
               <div
-                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-200"
+                class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition duration-200"
               >
-                <div class="flex items-center space-x-4">
-                  <div
-                    class="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center"
-                  >
-                    <i class="fas fa-building text-blue-600"></i>
+                <!-- Mobile Layout (Stack vertically) -->
+                <div class="flex flex-col space-y-3 md:hidden">
+                  <div class="flex items-center space-x-3">
+                    <div
+                      class="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                    >
+                      <i class="fas fa-map-marked-alt text-blue-600"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4 class="font-medium text-gray-900 truncate">
+                        {{ booking.destination.name }}
+                      </h4>
+                      <p class="text-sm text-gray-600 truncate">
+                        <span>{{ booking.destination.location }}</span>,
+                        <span>{{ booking.destination.district }}</span>
+                      </p>
+                    </div>
+                    <div class="flex-shrink-0">
+                      {% if booking.status == 'confirmed' %}
+                      <span
+                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
+                        >Confirmed</span
+                      >
+                      {% elif booking.status == 'pending' %}
+                      <span
+                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                        >Pending</span
+                      >
+                      {% elif booking.status == 'cancelled' %}
+                      <span
+                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800"
+                        >Cancelled</span
+                      >
+                      {% else %}
+                      <span
+                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                        >Completed</span
+                      >
+                      {% endif %}
+                    </div>
                   </div>
-                  <div>
-                    <h4 class="font-medium text-gray-900">
-                      {{ booking.hotel_name }}
-                    </h4>
-                    <p class="text-sm text-gray-600">{{ booking.location }}</p>
+                  <div class="flex justify-between items-center text-sm">
+                    <div>
+                      <p class="text-gray-600">
+                        Tour Date:
+                        <span class="font-medium text-gray-900"
+                          >{{ booking.tour_date|date:"M d, Y" }}</span
+                        >
+                      </p>
+                      <p class="text-gray-600">
+                        {{ booking.number_of_people }} person{{
+                        booking.number_of_people|pluralize }}
+                      </p>
+                    </div>
+                    <div class="text-right">
+                      <p class="font-medium text-primary text-lg">
+                        ৳{{ booking.total_amount|floatformat:0 }}
+                      </p>
+                      <p class="text-xs text-gray-500">
+                        {{ booking.booking_date|date:"M d, Y" }}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div class="text-right">
-                  <p class="text-sm font-medium text-gray-900">
-                    {{ booking.check_in }} - {{ booking.check_out }}
-                  </p>
-                  <p class="text-sm text-gray-600">৳{{ booking.total_cost }}</p>
-                </div>
-                <div>
-                  {% if booking.status == 'Confirmed' %}
-                  <span
-                    class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
-                  >
-                    {{ booking.status }}
-                  </span>
-                  {% else %}
-                  <span
-                    class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800"
-                  >
-                    {{ booking.status }}
-                  </span>
-                  {% endif %}
+
+                <!-- Desktop Layout (Horizontal) -->
+                <div class="hidden md:flex md:items-center md:justify-between">
+                  <div class="flex items-center space-x-4 flex-1 min-w-0">
+                    <div
+                      class="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                    >
+                      <i class="fas fa-map-marked-alt text-blue-600"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4 class="font-medium text-gray-900 truncate">
+                        {{ booking.destination.name }}
+                      </h4>
+                      <p class="text-sm text-gray-600 truncate">
+                        {{ booking.destination.location }},
+                        <span>{{ booking.destination.district }}</span>
+                      </p>
+                      <p class="text-xs text-gray-500">
+                        Booked: {{ booking.booking_date|date:"M d, Y" }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-6 flex-shrink-0">
+                    <div class="text-right">
+                      <p class="text-sm font-medium text-gray-900">
+                        {{ booking.tour_date|date:"M d, Y" }}
+                      </p>
+                      <p class="text-sm text-gray-600">
+                        {{ booking.number_of_people }} person
+                        <span>{{ booking.number_of_people|pluralize }}</span>
+                      </p>
+                      <p class="text-sm font-medium text-primary">
+                        ৳{{ booking.total_amount|floatformat:0 }}
+                      </p>
+                    </div>
+
+                    <div class="flex-shrink-0">
+                      {% if booking.status == 'confirmed' %}
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
+                        >Confirmed</span
+                      >
+                      {% elif booking.status == 'pending' %}
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                        >Pending</span
+                      >
+                      {% elif booking.status == 'cancelled' %}
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800"
+                        >Cancelled</span
+                      >
+                      {% else %}
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                        >Completed</span
+                      >
+                      {% endif %}
+                    </div>
+                  </div>
                 </div>
               </div>
               {% endfor %}
             </div>
             {% else %}
-            <div class="text-center py-8">
-              <i class="fas fa-hotel text-gray-400 text-3xl mb-3"></i>
-              <p class="text-gray-500 mb-2">No hotel bookings found</p>
-              <a href="/" class="text-primary hover:underline text-sm">
-                Browse hotels
+            <div class="text-center py-12">
+              <i class="fas fa-map-marked-alt text-gray-400 text-4xl mb-4"></i>
+              <p class="text-gray-500 text-lg mb-2">No tour bookings yet</p>
+              <p class="text-gray-400 text-sm mb-4">
+                Start exploring amazing destinations
+              </p>
+              <a
+                href="{% url 'destination:destination_list' %}"
+                class="inline-flex items-center px-4 py-2 bg-primary text-black rounded-lg hover:bg-yellow-500 transition duration-200"
+              >
+                <i class="fas fa-plus mr-2"></i>Book your first tour
               </a>
             </div>
             {% endif %}
           </div>
         </div>
 
-        <!-- Guide Bookings Section -->
+        <!-- Recent Guide Bookings -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200">
           <div class="px-6 py-4 border-b border-gray-200">
-            <div class="flex items-center justify-between">
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900">
-                  Guide Bookings
-                </h3>
-                <p class="text-sm text-gray-600">
-                  Your hired local guides and tour services
-                </p>
-              </div>
-              <button
-                class="text-primary hover:text-yellow-600 text-sm font-medium"
-              >
-                View All <i class="fas fa-arrow-right ml-1"></i>
-              </button>
-            </div>
+            <h3 class="text-lg font-semibold text-gray-900">
+              Recent Guide Bookings
+            </h3>
+            <p class="text-sm text-gray-600">Your hired local guides</p>
           </div>
           <div class="p-6">
-            {% if guide_bookings %}
+            {% if recent_guide_bookings %}
             <div class="space-y-4">
-              {% for booking in guide_bookings %}
+              {% for booking in recent_guide_bookings %}
+              <!-- Mobile-first responsive guide booking card -->
               <div
-                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-200"
+                class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition duration-200"
               >
-                <div class="flex items-center space-x-4">
-                  <div
-                    class="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center"
-                  >
-                    <i class="fas fa-user-tie text-green-600"></i>
+                <!-- Mobile Layout -->
+                <div class="flex flex-col space-y-3 md:hidden">
+                  <div class="flex items-center space-x-3">
+                    <div
+                      class="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                    >
+                      <i class="fas fa-user-tie text-green-600"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4 class="font-medium text-gray-900 truncate">
+                        {{ booking.guide_name }}
+                      </h4>
+                      <p class="text-sm text-gray-600 truncate">
+                        {{ booking.location }}
+                      </p>
+                    </div>
+                    <div class="flex-shrink-0">
+                      {% if booking.status == 'confirmed' %}
+                      <span
+                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
+                        >Confirmed</span
+                      >
+                      {% elif booking.status == 'pending' %}
+                      <span
+                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                        >Pending</span
+                      >
+                      {% else %}
+                      <span
+                        class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                        >Completed</span
+                      >
+                      {% endif %}
+                    </div>
                   </div>
-                  <div>
-                    <h4 class="font-medium text-gray-900">
-                      {{ booking.guide_name }}
-                    </h4>
-                    <p class="text-sm text-gray-600">{{ booking.location }}</p>
+                  <div class="flex justify-between items-center text-sm">
+                    <div>
+                      <p class="text-gray-600">
+                        Service:
+                        <span class="font-medium text-gray-900"
+                          >{{ booking.service_date|date:"M d, Y" }}</span
+                        >
+                      </p>
+                      <p class="text-gray-600">
+                        Duration: {{ booking.duration_hours }} hours
+                      </p>
+                    </div>
+                    <div class="text-right">
+                      <p class="font-medium text-primary text-lg">
+                        ৳{{ booking.total_cost|floatformat:0 }}
+                      </p>
+                      <p class="text-xs text-gray-500">
+                        {{ booking.get_guide_type_display }}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div class="text-right">
-                  <p class="text-sm font-medium text-gray-900">
-                    {{ booking.date }}
-                  </p>
-                  <p class="text-sm text-gray-600">
-                    {{ booking.duration }} - ৳{{ booking.cost }}
-                  </p>
-                </div>
-                <div>
-                  <span
-                    class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
-                  >
-                    {{ booking.status }}
-                  </span>
+
+                <!-- Desktop Layout -->
+                <div class="hidden md:flex md:items-center md:justify-between">
+                  <div class="flex items-center space-x-4 flex-1 min-w-0">
+                    <div
+                      class="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                    >
+                      <i class="fas fa-user-tie text-green-600"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h4 class="font-medium text-gray-900 truncate">
+                        {{ booking.guide_name }}
+                      </h4>
+                      <p class="text-sm text-gray-600 truncate">
+                        {{ booking.location }}
+                      </p>
+                      <p class="text-xs text-gray-500">
+                        {{ booking.get_guide_type_display }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-6 flex-shrink-0">
+                    <div class="text-right">
+                      <p class="text-sm font-medium text-gray-900">
+                        {{ booking.service_date|date:"M d, Y" }}
+                      </p>
+                      <p class="text-sm text-gray-600">
+                        {{ booking.duration_hours }} hours
+                      </p>
+                      <p class="text-sm font-medium text-primary">
+                        ৳{{ booking.total_cost|floatformat:0 }}
+                      </p>
+                    </div>
+
+                    <div class="flex-shrink-0">
+                      {% if booking.status == 'confirmed' %}
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
+                        >Confirmed</span
+                      >
+                      {% elif booking.status == 'pending' %}
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                        >Pending</span
+                      >
+                      {% else %}
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                        >Completed</span
+                      >
+                      {% endif %}
+                    </div>
+                  </div>
                 </div>
               </div>
               {% endfor %}
             </div>
             {% else %}
-            <div class="text-center py-8">
-              <i class="fas fa-user-tie text-gray-400 text-3xl mb-3"></i>
-              <p class="text-gray-500 mb-2">No guide bookings found</p>
-              <a href="/" class="text-primary hover:underline text-sm">
-                Find guides
+            <div class="text-center py-12">
+              <i class="fas fa-user-tie text-gray-400 text-4xl mb-4"></i>
+              <p class="text-gray-500 text-lg mb-2">No guide bookings yet</p>
+              <p class="text-gray-400 text-sm mb-4">
+                Hire local experts for better experiences
+              </p>
+              <a
+                href="#"
+                class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200"
+              >
+                <i class="fas fa-plus mr-2"></i>Hire your first guide
               </a>
             </div>
             {% endif %}
@@ -286,7 +439,7 @@
         </div>
       </div>
 
-      <!-- Right Column - Quick Actions & Recent Activity -->
+      <!-- Right Column - Quick Actions & Stats -->
       <div class="space-y-8">
         <!-- Quick Actions -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200">
@@ -296,90 +449,51 @@
           <div class="p-6">
             <div class="space-y-3">
               <a
-                href="#"
-                class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition duration-200 group"
+                href="{% url 'destination:destination_list' %}"
+                class="flex items-center p-4 rounded-lg hover:bg-gray-50 transition duration-200 group border border-gray-100"
               >
                 <div
-                  class="h-10 w-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition duration-200"
+                  class="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition duration-200 flex-shrink-0"
                 >
-                  <i class="fas fa-map-marked-alt text-purple-600"></i>
+                  <i class="fas fa-map-marked-alt text-blue-600 text-lg"></i>
                 </div>
-                <div class="ml-3">
+                <div class="ml-4 min-w-0">
                   <p class="font-medium text-gray-900">Explore Destinations</p>
-                  <p class="text-sm text-gray-600">Discover new places</p>
-                </div>
-              </a>
-              <a
-                href="#"
-                class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition duration-200 group"
-              >
-                <div
-                  class="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition duration-200"
-                >
-                  <i class="fas fa-hotel text-blue-600"></i>
-                </div>
-                <div class="ml-3">
-                  <p class="font-medium text-gray-900">Book Hotel</p>
-                  <p class="text-sm text-gray-600">Find accommodation</p>
-                </div>
-              </a>
-              <a
-                href="#"
-                class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition duration-200 group"
-              >
-                <div
-                  class="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition duration-200"
-                >
-                  <i class="fas fa-user-tie text-green-600"></i>
-                </div>
-                <div class="ml-3">
-                  <p class="font-medium text-gray-900">Hire Guide</p>
-                  <p class="text-sm text-gray-600">Get local assistance</p>
+                  <p class="text-sm text-gray-600">
+                    Find amazing places to visit
+                  </p>
                 </div>
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Recent Activity -->
+        <!-- Personal Stats -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200">
           <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">Recent Activity</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Your Statistics</h3>
           </div>
           <div class="p-6">
             <div class="space-y-4">
-              <div class="flex items-start space-x-3">
-                <div
-                  class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center mt-1"
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Member Since</span>
+                <span class="font-medium"
+                  >{{ user.date_joined|date:"M Y" }}</span
                 >
-                  <i class="fas fa-check text-green-600 text-xs"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-sm text-gray-900">Hotel booking confirmed</p>
-                  <p class="text-xs text-gray-500">2 hours ago</p>
-                </div>
               </div>
-              <div class="flex items-start space-x-3">
-                <div
-                  class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center mt-1"
-                >
-                  <i class="fas fa-credit-card text-blue-600 text-xs"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-sm text-gray-900">Payment processed</p>
-                  <p class="text-xs text-gray-500">1 day ago</p>
-                </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Tour Bookings</span>
+                <span class="font-medium">{{ tour_count|default:0 }}</span>
               </div>
-              <div class="flex items-start space-x-3">
-                <div
-                  class="h-8 w-8 bg-purple-100 rounded-full flex items-center justify-center mt-1"
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Guide Bookings</span>
+                <span class="font-medium">{{ guide_count|default:0 }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Total Spent</span>
+                <span class="font-medium text-primary"
+                  >৳{{ total_spent|floatformat:0|default:0 }}</span
                 >
-                  <i class="fas fa-map-pin text-purple-600 text-xs"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-sm text-gray-900">New destination viewed</p>
-                  <p class="text-xs text-gray-500">3 days ago</p>
-                </div>
               </div>
             </div>
           </div>
@@ -387,5 +501,6 @@
       </div>
     </div>
   </div>
-  {% endblock %}
 </div>
+
+{% endblock %}

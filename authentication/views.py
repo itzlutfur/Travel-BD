@@ -17,7 +17,7 @@ class CustomLoginView(LoginView):
     def dispatch(self, request, *args, **kwargs):
         # Redirect authenticated users to dashboard
         if request.user.is_authenticated:
-            return redirect('authentication:dashboard')
+            return redirect('dashboard:dashboard')
         
         # Clear any existing messages when accessing login page
         if hasattr(request, '_messages'):
@@ -33,19 +33,19 @@ class CustomLoginView(LoginView):
         return super().form_invalid(form)
     
     def get_success_url(self):
-        return reverse_lazy('authentication:dashboard')
+        return reverse_lazy('dashboard:dashboard')
 
 
 class RegisterView(CreateView):
     """Registration view"""
     form_class = SignUpForm
     template_name = 'register.html'
-    success_url = reverse_lazy('authentication:dashboard')
+    success_url = reverse_lazy('dashboard:dashboard')
     
     def dispatch(self, request, *args, **kwargs):
         # Redirect authenticated users to dashboard
         if request.user.is_authenticated:
-            return redirect('authentication:dashboard')
+            return redirect('dashboard:dashboard')
         
         # Clear any existing messages when accessing register page
         if hasattr(request, '_messages'):
@@ -80,66 +80,3 @@ class CustomLogoutView(View):
         logout(request)
         messages.success(request, 'You have been successfully logged out.')
         return redirect('home')
-
-
-class DashboardView(TemplateView):
-    """Customer dashboard view"""
-    template_name = 'dashboard.html'
-    
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('authentication:login')
-        return super().dispatch(request, *args, **kwargs)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.request.user
-        
-        # Mock data for hotel and guide bookings
-        context.update({
-            'user': user,
-            'hotel_bookings': [
-                {
-                    'id': 1,
-                    'hotel_name': 'Grand Hotel Dhaka',
-                    'location': 'Dhaka, Bangladesh',
-                    'check_in': '2024-08-15',
-                    'check_out': '2024-08-20',
-                    'status': 'Confirmed',
-                    'total_cost': '$250'
-                },
-                {
-                    'id': 2,
-                    'hotel_name': 'Sea Pearl Resort',
-                    'location': "Cox's Bazar, Bangladesh",
-                    'check_in': '2024-09-10',
-                    'check_out': '2024-09-15',
-                    'status': 'Pending',
-                    'total_cost': '$400'
-                }
-            ],
-            'guide_bookings': [
-                {
-                    'id': 1,
-                    'guide_name': 'Rashid Ahmed',
-                    'location': 'Sylhet, Bangladesh',
-                    'date': '2024-08-25',
-                    'duration': '3 days',
-                    'rating': 4.8,
-                    'total_cost': '$150'
-                },
-                {
-                    'id': 2,
-                    'guide_name': 'Fatima Khan',
-                    'location': 'Chittagong Hill Tracts',
-                    'date': '2024-09-05',
-                    'duration': '5 days',
-                    'rating': 4.9,
-                    'total_cost': '$300'
-                }
-            ],
-            'total_bookings': 4,
-            'total_spent': '$1100'
-        })
-        
-        return context

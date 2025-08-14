@@ -203,7 +203,7 @@
       modal.remove();
       // If it's a success modal, redirect to dashboard
       if (modalId === "successModal") {
-        window.location.href = "{% url 'authentication:dashboard' %}";
+        window.location.href = "{% url 'dashboard:dashboard' %}";
       }
     }
   }

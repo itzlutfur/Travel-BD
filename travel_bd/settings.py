@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'authentication',
     'destination',
     'hire_guide',
-    'hotel_booking',
+    'tour_booking',
     'dashboard',
 ]
 

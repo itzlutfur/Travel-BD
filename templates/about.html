@@ -1,146 +1,427 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
-<!-- about us -->
-<div class="w-4/5 mx-auto">
-  <section class="max-w-4xl my-12">
-    <h1 class="text-6xl font-bold mb-10 text-black">About Us</h1>
-
-    <div class="flex items-start mb-8">
-      <div class="text-4xl mr-5 mt-2">📍</div>
-      <div>
-        <h2 class="text-3xl font-bold mb-3 text-black">Location</h2>
-        <p class="text-base mt-3 text-gray-600">
-          Bangi tower, Dhanmondi 32, Bangladesh
-        </p>
-      </div>
-    </div>
-
-    <div class="flex items-start mb-8">
-      <div class="text-4xl mr-5 mt-2">📑</div>
-      <div>
-        <h2 class="text-3xl font-bold mb-3 text-black">Description</h2>
-        <p class="text-base mt-3 text-gray-600">
-          Welcome to Your Travel Agency, where adventure begins! We are a team
-          of passionate travel enthusiasts dedicated to providing you with
-          unforgettable travel experiences. Whether you're seeking relaxation on
-          a tropical beach, exploring ancient ruins, or embarking on thrilling
-          adventures, we've got you covered.
-        </p>
-      </div>
-    </div>
-
-    <div class="flex items-start mb-8">
-      <div class="text-4xl mr-5 mt-2">🛎️</div>
-      <div>
-        <h2 class="text-3xl font-bold mb-3 text-black">Our Services</h2>
-        <p class="text-base mt-3 text-gray-600">
-          At Your Travel Agency, we offer a wide range of services to cater to
-          your travel needs:
-        </p>
-        <ul class="list-none pl-0 mt-3">
-          <li class="text-base text-green-700 my-2">✔️ Hotel reservations</li>
-          <li class="text-base text-green-700 my-2">✔️ Local Guide booking</li>
-          <li class="text-base text-green-700 my-2">✔️ Car rentals</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Choose Us Section -->
-  <div class="flex items-start mb-8">
-    <div class="text-4xl mr-5 mt-2">💡</div>
-    <div>
-      <h2 class="text-3xl font-bold mb-3 text-black">Why Choose Us?</h2>
-      <p class="text-base mt-3 text-gray-600">
-        Here are a few reasons why you should choose us for your next adventure:
+<!-- Hero Section with improved background -->
+<div class="bg-gradient-to-br from-blue-50 via-white to-primary/5 py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+        About <span class="text-primary">Travel BD</span>
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Your trusted companion for exploring the breathtaking beauty of
+        Bangladesh
       </p>
-      <ul class="list-none pl-0 mt-3">
-        <li class="text-base text-gray-800 my-2">
-          ✔️ Experienced and knowledgeable staff
-        </li>
-        <li class="text-base text-gray-800 my-2">
-          ✔️ Personalized service tailored to your preferences
-        </li>
-        <li class="text-base text-gray-800 my-2">
-          ✔️ Extensive network of trusted partners and suppliers
-        </li>
-        <li class="text-base text-gray-800 my-2">
-          ✔️ Competitive prices and special offers
-        </li>
-        <li class="text-base text-gray-800 my-2">✔️ 24/7 customer support</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Our Team Section -->
-  <div class="flex items-start mb-8">
-    <div class="text-4xl mr-5 mt-2">👥</div>
-    <div>
-      <h2 class="text-3xl font-bold mb-3 text-black">Our Team</h2>
-      <p class="text-base mt-3 text-gray-600">
-        We have a team of dedicated professionals who are passionate about
-        travel and are committed to making your journey memorable. Get to know
-        our team:
-      </p>
-      <div class="flex gap-10 mt-5 flex-wrap">
-        <div class="text-center max-w-[150px]">
-          <img
-            src="{% static 'images/tanvir.png' %}"
-            alt="Tanvir"
-            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
-          />
-          <h3 class="my-3 text-xl font-semibold text-black">
-            Lutfur Rahman Tanvir
-          </h3>
-          <p class="m-0 text-sm text-gray-600">CTO</p>
-        </div>
-        <div class="text-center max-w-[150px]">
-          <img
-            src="{% static 'images/guide.jpg' %}"
-            alt="Rachin"
-            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
-          />
-          <h3 class="my-3 text-xl font-semibold text-black">Rachin</h3>
-          <p class="m-0 text-sm text-gray-600">CEO</p>
-        </div>
-        <div class="text-center max-w-[150px]">
-          <img
-            src="{% static 'images/guide.jpg' %}"
-            alt="Ibrahim"
-            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
-          />
-          <h3 class="my-3 text-xl font-semibold text-black">Ibrahim</h3>
-          <p class="m-0 text-sm text-gray-600">Security guard</p>
-        </div>
-        <div class="text-center max-w-[150px]">
-          <img
-            src="{% static 'images/guide.jpg' %}"
-            alt="Sunny"
-            class="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
-          />
-          <h3 class="my-3 text-xl font-semibold text-black">Sunny</h3>
-          <p class="m-0 text-sm text-gray-600">Delivery boy</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Contact Us Section -->
-  <div class="flex items-start mb-8">
-    <div class="text-4xl mr-5 mt-2">👤</div>
-    <div>
-      <h2 class="text-3xl font-bold mb-3 text-black">Contact Us</h2>
-      <p class="text-base mt-3 text-gray-600">
-        Have a question or ready to start planning your next adventure? Contact
-        us today:
-      </p>
-      <ul class="list-none pl-0 mt-3">
-        <li class="text-base text-gray-800 my-2">✔️ Email: info@bangi.com</li>
-        <li class="text-base text-gray-800 my-2">✔️ Phone: +8801950000000</li>
-        <li class="text-base text-gray-800 my-2">
-          ✔️ Address: Bangi tower, Dhanmondi 32, Bangladesh
-        </li>
-      </ul>
     </div>
   </div>
 </div>
+
+<!-- Main Content -->
+<div class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Company Overview -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+      <div>
+        <div class="flex items-center mb-6">
+          <div
+            class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center mr-4"
+          >
+            <i class="fas fa-map-marked-alt text-black text-xl"></i>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900">Our Story</h2>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed mb-6">
+          Welcome to Travel BD, where adventure begins! We are a team of
+          passionate travel enthusiasts dedicated to providing you with
+          unforgettable travel experiences across the beautiful landscapes of
+          Bangladesh.
+        </p>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Whether you're seeking relaxation on pristine beaches, exploring
+          ancient heritage sites, or embarking on thrilling adventures through
+          lush green hills, we've got you covered with expertly curated
+          experiences.
+        </p>
+      </div>
+      <div class="relative">
+        <img
+          src="{% static 'images/Heroimage.png' %}"
+          alt="Travel BD Experience"
+          class="rounded-2xl shadow-xl w-full h-96 object-cover"
+        />
+        <div class="absolute inset-0 bg-primary/20 rounded-2xl"></div>
+      </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="mb-20">
+      <div class="text-center mb-12">
+        <div
+          class="inline-flex items-center justify-center h-16 w-16 bg-primary rounded-full mb-4"
+        >
+          <i class="fas fa-concierge-bell text-black text-2xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Services</h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+          We offer a comprehensive range of services to make your Bangladesh
+          journey seamless and memorable
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          class="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition duration-300"
+        >
+          <div
+            class="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-hotel text-blue-600 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">
+            Hotel Reservations
+          </h3>
+          <p class="text-gray-600">
+            Comfortable accommodations from budget-friendly to luxury hotels
+            across Bangladesh
+          </p>
+        </div>
+
+        <div
+          class="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition duration-300"
+        >
+          <div
+            class="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-user-tie text-green-600 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">
+            Local Guide Booking
+          </h3>
+          <p class="text-gray-600">
+            Expert local guides to help you discover hidden gems and cultural
+            insights
+          </p>
+        </div>
+
+        <div
+          class="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition duration-300"
+        >
+          <div
+            class="h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-route text-purple-600 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">
+            Tour Packages
+          </h3>
+          <p class="text-gray-600">
+            Curated tour packages for destinations across Bangladesh with
+            all-inclusive options
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <div
+      class="bg-gradient-to-r from-gray-50 to-blue-50 rounded-3xl p-8 lg:p-12 mb-20"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="flex items-center mb-6">
+            <div
+              class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center mr-4"
+            >
+              <i class="fas fa-star text-black text-xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">Why Choose Us?</h2>
+          </div>
+          <p class="text-gray-600 text-lg mb-6">
+            Here are compelling reasons why thousands of travelers trust us for
+            their Bangladesh adventures:
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center">
+            <div
+              class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+            >
+              <i class="fas fa-check text-green-600"></i>
+            </div>
+            <span class="text-gray-800"
+              >Experienced and knowledgeable local staff</span
+            >
+          </div>
+          <div class="flex items-center">
+            <div
+              class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+            >
+              <i class="fas fa-check text-green-600"></i>
+            </div>
+            <span class="text-gray-800"
+              >Personalized service tailored to your preferences</span
+            >
+          </div>
+          <div class="flex items-center">
+            <div
+              class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+            >
+              <i class="fas fa-check text-green-600"></i>
+            </div>
+            <span class="text-gray-800"
+              >Extensive network of trusted partners and suppliers</span
+            >
+          </div>
+          <div class="flex items-center">
+            <div
+              class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+            >
+              <i class="fas fa-check text-green-600"></i>
+            </div>
+            <span class="text-gray-800"
+              >Competitive prices and exclusive deals</span
+            >
+          </div>
+          <div class="flex items-center">
+            <div
+              class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+            >
+              <i class="fas fa-check text-green-600"></i>
+            </div>
+            <span class="text-gray-800"
+              >24/7 customer support and assistance</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Our Team Section -->
+    <div class="mb-20">
+      <div class="text-center mb-12">
+        <div
+          class="inline-flex items-center justify-center h-16 w-16 bg-primary rounded-full mb-4"
+        >
+          <i class="fas fa-users text-black text-2xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+          Our dedicated professionals are passionate about travel and committed
+          to making your journey memorable
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+          class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition duration-300"
+        >
+          <img
+            src="{% static 'images/tanvir.png' %}"
+            alt="Lutfur Rahman Tanvir"
+            class="w-24 h-24 object-cover rounded-full border-4 border-primary/20 mx-auto mb-4"
+          />
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">
+            Lutfur Rahman Tanvir
+          </h3>
+          <p class="text-primary font-medium mb-2">Chief Technology Officer</p>
+          <p class="text-sm text-gray-600">
+            Leading our tech innovations for better travel experiences
+          </p>
+        </div>
+
+        <div
+          class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition duration-300"
+        >
+          <img
+            src="{% static 'images/guide.jpg' %}"
+            alt="Rachin"
+            class="w-24 h-24 object-cover rounded-full border-4 border-primary/20 mx-auto mb-4"
+          />
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">Rachin</h3>
+          <p class="text-primary font-medium mb-2">Chief Executive Officer</p>
+          <p class="text-sm text-gray-600">
+            Visionary leader driving our company's growth and success
+          </p>
+        </div>
+
+        <div
+          class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition duration-300"
+        >
+          <img
+            src="{% static 'images/guide.jpg' %}"
+            alt="Ibrahim"
+            class="w-24 h-24 object-cover rounded-full border-4 border-primary/20 mx-auto mb-4"
+          />
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">Ibrahim</h3>
+          <p class="text-primary font-medium mb-2">Operations Manager</p>
+          <p class="text-sm text-gray-600">
+            Ensuring smooth operations and customer satisfaction
+          </p>
+        </div>
+
+        <div
+          class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition duration-300"
+        >
+          <img
+            src="{% static 'images/guide.jpg' %}"
+            alt="Sunny"
+            class="w-24 h-24 object-cover rounded-full border-4 border-primary/20 mx-auto mb-4"
+          />
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">Sunny</h3>
+          <p class="text-primary font-medium mb-2">Customer Relations</p>
+          <p class="text-sm text-gray-600">
+            Dedicated to providing exceptional customer service
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="bg-gray-900 rounded-3xl p-8 lg:p-12 text-white">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="flex items-center mb-6">
+            <div
+              class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center mr-4"
+            >
+              <i class="fas fa-envelope text-black text-xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold">Get In Touch</h2>
+          </div>
+          <p class="text-gray-300 text-lg mb-8">
+            Have a question or ready to start planning your next adventure?
+            We're here to help make your Bangladesh journey unforgettable.
+          </p>
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <i class="fas fa-envelope text-primary w-6 mr-4"></i>
+              <span class="text-gray-300">info@travelbd.com</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-phone text-primary w-6 mr-4"></i>
+              <span class="text-gray-300">+880 1950 307262</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt text-primary w-6 mr-4"></i>
+              <span class="text-gray-300"
+                >Bangi Tower, Dhanmondi 32, Dhaka, Bangladesh</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-8">
+          <h3 class="text-xl font-semibold text-gray-900 mb-6">
+            Send us a message
+          </h3>
+          <form class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Your Name"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Subject"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            />
+            <textarea
+              rows="4"
+              placeholder="Your Message"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary resize-none"
+            ></textarea>
+            <button
+              type="submit"
+              class="w-full bg-primary text-black font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition duration-200"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Statistics Section with improved background -->
+<div class="relative bg-white py-16 overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0">
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-primary/5 via-blue-50/50 to-primary/5"
+    ></div>
+    <div
+      class="absolute top-0 left-1/4 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
+    ></div>
+    <div
+      class="absolute top-0 right-1/4 w-72 h-72 bg-blue-200/40 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
+    ></div>
+    <div
+      class="absolute -bottom-8 left-1/3 w-72 h-72 bg-purple-200/30 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"
+    ></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+      <div
+        class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition duration-300"
+      >
+        <div class="text-4xl font-bold text-primary mb-2">500+</div>
+        <div class="text-gray-600 font-medium">Happy Travelers</div>
+      </div>
+      <div
+        class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition duration-300"
+      >
+        <div class="text-4xl font-bold text-primary mb-2">50+</div>
+        <div class="text-gray-600 font-medium">Destinations</div>
+      </div>
+      <div
+        class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition duration-300"
+      >
+        <div class="text-4xl font-bold text-primary mb-2">100+</div>
+        <div class="text-gray-600 font-medium">Tour Packages</div>
+      </div>
+      <div
+        class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition duration-300"
+      >
+        <div class="text-4xl font-bold text-primary mb-2">24/7</div>
+        <div class="text-gray-600 font-medium">Customer Support</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+</style>
 {% endblock %}

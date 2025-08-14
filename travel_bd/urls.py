@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import HomeView, DestinationView, AboutView, FeatureView
+from .views import HomeView, AboutView, FeatureView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +26,10 @@ urlpatterns = [
     path('about/', AboutView.as_view(), name='about'),
     path('feature/', FeatureView.as_view(), name='feature'),
     path('auth/', include('authentication.urls')),
+    path('booking/', include('tour_booking.urls')),
     path('destinations/', include('destination.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('hire-guide/', include('hire_guide.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

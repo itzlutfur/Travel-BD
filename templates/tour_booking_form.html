@@ -1,0 +1,477 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<div class="min-h-screen bg-gray-50 py-12">
+  <div class="max-w-4xl mx-auto px-4">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Book Your Tour</h1>
+      <p class="text-gray-600">
+        Complete your booking for an amazing experience
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Destination Info -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+          {{ destination.name }}
+        </h2>
+
+        {% if destination.main_image %}
+        <img
+          src="{{ destination.main_image.url }}"
+          alt="{{ destination.name }}"
+          class="w-full h-48 object-cover rounded-lg mb-4"
+        />
+        {% else %}
+        <div
+          class="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center"
+        >
+          <svg
+            class="w-16 h-16 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2z"
+            ></path>
+          </svg>
+        </div>
+        {% endif %}
+
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-gray-600">Location:</span>
+            <span class="font-medium"
+              >{{ destination.location }}, {{ destination.district }}</span
+            >
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Duration:</span>
+            <span class="font-medium"
+              >{{ destination.tour_duration_days }} day(s)</span
+            >
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Price per person:</span>
+            <span class="font-bold text-primary text-lg"
+              >৳{{ destination.tour_price }}</span
+            >
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Max group size:</span>
+            <span class="font-medium"
+              >{{ destination.max_group_size }} people</span
+            >
+          </div>
+        </div>
+
+        {% if destination.tour_includes %}
+        <div class="mt-6">
+          <h3 class="font-semibold text-gray-800 mb-2">✅ Tour Includes:</h3>
+          <div class="text-sm text-gray-600 bg-green-50 p-3 rounded-lg">
+            {{ destination.tour_includes }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Booking Form -->
+      <div
+        class="bg-white rounded-lg shadow-md p-6"
+        data-tour-price="{{ destination.tour_price }}"
+        data-max-group-size="{{ destination.max_group_size }}"
+        id="bookingFormContainer"
+      >
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Booking Details</h2>
+
+        <form method="POST" id="bookingForm">
+          {% csrf_token %}
+          <div class="space-y-6">
+            <!-- Tour Date -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Tour Date *</label
+              >
+              <input
+                type="date"
+                name="tour_date"
+                id="tourDate"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              />
+              <small class="text-gray-500"
+                >Best time: {{ destination.best_time_to_visit }}</small
+              >
+              <div id="dateError" class="text-red-500 text-sm mt-1 hidden">
+                Please select a future date for your tour
+              </div>
+            </div>
+
+            <!-- Number of People -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Number of People *</label
+              >
+              <select
+                name="number_of_people"
+                id="peopleCount"
+                onchange="updateTotal()"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+              >
+                <option value="1">1 person</option>
+                <option value="2">2 persons</option>
+                <option value="3">3 persons</option>
+                <option value="4">4 persons</option>
+                <option value="5">5 persons</option>
+                <option value="6">6 persons</option>
+                <option value="7">7 persons</option>
+                <option value="8">8 persons</option>
+                <option value="9">9 persons</option>
+                <option value="10">10 persons</option>
+                <option value="11">11 persons</option>
+                <option value="12">12 persons</option>
+                <option value="13">13 persons</option>
+                <option value="14">14 persons</option>
+                <option value="15">15 persons</option>
+                <option value="16">16 persons</option>
+                <option value="17">17 persons</option>
+                <option value="18">18 persons</option>
+                <option value="19">19 persons</option>
+                <option value="20">20 persons</option>
+                <option value="21">21 persons</option>
+                <option value="22">22 persons</option>
+                <option value="23">23 persons</option>
+                <option value="24">24 persons</option>
+                <option value="25">25 persons</option>
+                <option value="26">26 persons</option>
+                <option value="27">27 persons</option>
+                <option value="28">28 persons</option>
+                <option value="29">29 persons</option>
+                <option value="30">30 persons</option>
+              </select>
+              <small class="text-gray-500">
+                Maximum {{ destination.max_group_size }} people allowed
+              </small>
+              <div id="groupSizeError" class="text-red-500 text-sm mt-1 hidden">
+                Group size cannot exceed {{ destination.max_group_size }} people
+              </div>
+            </div>
+
+            <!-- Contact Phone -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Contact Phone *</label
+              >
+              <input
+                type="tel"
+                name="contact_phone"
+                id="contactPhone"
+                placeholder="01XXXXXXXXX"
+                pattern="01[0-9]{9}"
+                maxlength="11"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+                oninput="validatePhone()"
+              />
+              <small class="text-gray-500">
+                Enter your 11-digit mobile number starting with 01
+              </small>
+              <div id="phoneError" class="text-red-500 text-sm mt-1 hidden">
+                Please enter a valid 11-digit mobile number starting with 01
+              </div>
+            </div>
+
+            <!-- Special Requests -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Special Requests (Optional)</label
+              >
+              <textarea
+                name="special_requests"
+                rows="3"
+                maxlength="500"
+                placeholder="Any special requirements..."
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+                oninput="updateCharCount()"
+              ></textarea>
+              <small class="text-gray-500">
+                <span id="charCount">0</span>/500 characters
+              </small>
+            </div>
+
+            <!-- Pricing Summary -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <h3 class="font-semibold text-gray-800 mb-3">Pricing Summary</h3>
+              <div class="space-y-2">
+                <div class="flex justify-between">
+                  <span>Price per person:</span>
+                  <span>৳{{ destination.tour_price }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Number of people:</span>
+                  <span id="displayPeople">1</span>
+                </div>
+                <div id="discountSection" class="hidden">
+                  <div class="flex justify-between text-green-600">
+                    <span>Group discount (10+ people):</span>
+                    <span id="discountAmount">-৳0</span>
+                  </div>
+                </div>
+                <div class="border-t pt-2 mt-2">
+                  <div class="flex justify-between font-bold text-lg">
+                    <span>Total Amount:</span>
+                    <span id="totalAmount" class="text-primary"
+                      >৳{{ destination.tour_price }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Availability Check -->
+            <div
+              id="availabilityCheck"
+              class="bg-blue-50 border border-blue-200 rounded-lg p-4 hidden"
+            >
+              <div class="flex items-center">
+                <div
+                  class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"
+                ></div>
+                <span class="text-blue-700 text-sm"
+                  >Checking availability...</span
+                >
+              </div>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="flex items-start">
+              <input type="checkbox" id="terms" required class="mt-1 mr-2" />
+              <label for="terms" class="text-sm text-gray-600">
+                I agree to the
+                <a href="#" class="text-primary hover:underline"
+                  >terms and conditions</a
+                >
+                and understand that this booking is subject to availability
+                confirmation.
+              </label>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex space-x-4">
+              <a
+                href="{% url 'destination:destination_detail' destination.slug %}"
+                class="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg text-center hover:bg-gray-400 transition duration-200"
+              >
+                Back to Details
+              </a>
+              <button
+                type="submit"
+                id="submitBtn"
+                class="flex-1 bg-primary text-black py-3 px-6 rounded-lg hover:bg-yellow-500 transition duration-200 font-semibold disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+              >
+                Proceed to Payment
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Get data from HTML data attributes
+  const bookingContainer = document.getElementById("bookingFormContainer");
+  const tourPrice = parseFloat(bookingContainer.dataset.tourPrice) || 0;
+  const maxGroupSize = parseInt(bookingContainer.dataset.maxGroupSize) || 20;
+
+  function updateTotal() {
+    const peopleCount =
+      parseInt(document.getElementById("peopleCount").value) || 1;
+    const groupSizeError = document.getElementById("groupSizeError");
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Validate group size
+    if (peopleCount > maxGroupSize) {
+      groupSizeError.classList.remove("hidden");
+      submitBtn.disabled = true;
+      return;
+    } else {
+      groupSizeError.classList.add("hidden");
+      submitBtn.disabled = false;
+    }
+
+    let total = tourPrice * peopleCount;
+    let discount = 0;
+
+    // Apply group discount for 10+ people (5% discount)
+    if (peopleCount >= 10) {
+      discount = total * 0.05;
+      total = total - discount;
+      document.getElementById("discountSection").classList.remove("hidden");
+      document.getElementById("discountAmount").textContent =
+        "-৳" + discount.toLocaleString();
+    } else {
+      document.getElementById("discountSection").classList.add("hidden");
+    }
+
+    document.getElementById("totalAmount").textContent =
+      "৳" + total.toLocaleString();
+    document.getElementById("displayPeople").textContent = peopleCount;
+  }
+
+  function validatePhone() {
+    const phoneInput = document.getElementById("contactPhone");
+    const phoneError = document.getElementById("phoneError");
+    const phonePattern = /^01[0-9]{9}$/;
+    const submitBtn = document.getElementById("submitBtn");
+
+    if (phoneInput.value && !phonePattern.test(phoneInput.value)) {
+      phoneError.classList.remove("hidden");
+      phoneInput.classList.add("border-red-500");
+      submitBtn.disabled = true;
+    } else {
+      phoneError.classList.add("hidden");
+      phoneInput.classList.remove("border-red-500");
+      if (phoneInput.value.length === 11) {
+        submitBtn.disabled = false;
+      }
+    }
+  }
+
+  function updateCharCount() {
+    const textarea = document.querySelector(
+      'textarea[name="special_requests"]'
+    );
+    const charCount = document.getElementById("charCount");
+    charCount.textContent = textarea.value.length;
+  }
+
+  function validateDate() {
+    const tourDate = document.querySelector("#tourDate").value;
+    const dateError = document.getElementById("dateError");
+    const today = new Date().toISOString().split("T")[0];
+    const submitBtn = document.getElementById("submitBtn");
+
+    if (tourDate && tourDate <= today) {
+      dateError.classList.remove("hidden");
+      document.querySelector("#tourDate").classList.add("border-red-500");
+      submitBtn.disabled = true;
+      return false;
+    } else {
+      dateError.classList.add("hidden");
+      document.querySelector("#tourDate").classList.remove("border-red-500");
+      submitBtn.disabled = false;
+      return true;
+    }
+  }
+
+  function checkAvailability() {
+    const availabilityCheck = document.getElementById("availabilityCheck");
+    const tourDate = document.querySelector("#tourDate").value;
+    const peopleCount = document.getElementById("peopleCount").value;
+
+    if (tourDate && validateDate()) {
+      availabilityCheck.classList.remove("hidden");
+
+      // Simulate availability check (replace with actual API call)
+      setTimeout(() => {
+        availabilityCheck.classList.add("hidden");
+        // You can add actual availability logic here
+      }, 1500);
+    }
+  }
+
+  // Set minimum and maximum dates
+  document.addEventListener("DOMContentLoaded", function () {
+    const today = new Date().toISOString().split("T")[0];
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 6);
+
+    const tourDateInput = document.querySelector("#tourDate");
+    tourDateInput.setAttribute("min", today);
+    tourDateInput.setAttribute("max", maxDate.toISOString().split("T")[0]);
+
+    // Add event listeners
+    tourDateInput.addEventListener("change", function () {
+      validateDate();
+      checkAvailability();
+    });
+
+    document
+      .getElementById("peopleCount")
+      .addEventListener("change", function () {
+        updateTotal();
+        checkAvailability();
+      });
+  });
+
+  // Form validation on submit
+  document
+    .getElementById("bookingForm")
+    .addEventListener("submit", function (e) {
+      const phoneInput = document.querySelector('input[name="contact_phone"]');
+      const phonePattern = /^01[0-9]{9}$/;
+      const peopleCount = parseInt(
+        document.getElementById("peopleCount").value
+      );
+      const submitBtn = document.getElementById("submitBtn");
+
+      let isValid = true;
+
+      // Phone validation
+      if (!phonePattern.test(phoneInput.value)) {
+        e.preventDefault();
+        validatePhone();
+        isValid = false;
+      }
+
+      // Date validation
+      if (!validateDate()) {
+        e.preventDefault();
+        isValid = false;
+      }
+
+      // Group size validation
+      if (peopleCount > maxGroupSize) {
+        e.preventDefault();
+        document.getElementById("groupSizeError").classList.remove("hidden");
+        isValid = false;
+      }
+
+      // Terms validation
+      if (!document.getElementById("terms").checked) {
+        e.preventDefault();
+        alert("Please accept the terms and conditions");
+        isValid = false;
+      }
+
+      if (!isValid) {
+        submitBtn.disabled = true;
+        return false;
+      }
+
+      // Show loading state
+      submitBtn.innerHTML =
+        '<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>Processing...</div>';
+      submitBtn.disabled = true;
+    });
+
+  // Real-time validation feedback
+  document
+    .getElementById("contactPhone")
+    .addEventListener("input", validatePhone);
+  document.getElementById("tourDate").addEventListener("input", validateDate);
+  document
+    .getElementById("peopleCount")
+    .addEventListener("change", updateTotal);
+
+  // Initialize calculations
+  updateTotal();
+</script>
+{% endblock %}
