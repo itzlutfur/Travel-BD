@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'destination',
     'hire_guide',
     'hotel_booking',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
