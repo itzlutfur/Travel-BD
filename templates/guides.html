@@ -183,6 +183,72 @@
       {% endfor %}
     </div>
 
+    <!-- Pagination -->
+    {% if guides.has_other_pages %}
+      <div class="flex justify-center">
+        <nav class="flex items-center space-x-2">
+          <!-- Previous Page -->
+          {% if guides.has_previous %}
+            <a
+              href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if selected_specialization %}specialization={{ selected_specialization }}&{% endif %}{% if selected_division %}division={{ selected_division }}&{% endif %}{% if selected_experience %}experience={{ selected_experience }}&{% endif %}page={{ guides.previous_page_number }}"
+              class="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          {% else %}
+            <span class="px-3 py-2 bg-gray-100 border border-gray-300 text-gray-400 rounded-lg cursor-not-allowed">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </span>
+          {% endif %}
+
+          <!-- Page Numbers -->
+          {% for num in guides.paginator.page_range %}
+            {% if guides.number == num %}
+              <span class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium">
+                {{ num }}
+              </span>
+            {% elif num > guides.number|add:'-3' and num < guides.number|add:'3' %}
+              <a
+                href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if selected_specialization %}specialization={{ selected_specialization }}&{% endif %}{% if selected_division %}division={{ selected_division }}&{% endif %}{% if selected_experience %}experience={{ selected_experience }}&{% endif %}page={{ num }}"
+                class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200"
+              >
+                {{ num }}
+              </a>
+            {% endif %}
+          {% endfor %}
+
+          <!-- Next Page -->
+          {% if guides.has_next %}
+            <a
+              href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if selected_specialization %}specialization={{ selected_specialization }}&{% endif %}{% if selected_division %}division={{ selected_division }}&{% endif %}{% if selected_experience %}experience={{ selected_experience }}&{% endif %}page={{ guides.next_page_number }}"
+              class="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          {% else %}
+            <span class="px-3 py-2 bg-gray-100 border border-gray-300 text-gray-400 rounded-lg cursor-not-allowed">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </span>
+          {% endif %}
+        </nav>
+      </div>
+
+      <!-- Page Info -->
+      <div class="text-center mt-4">
+        <p class="text-sm text-gray-600">
+          Page {{ guides.number }} of {{ guides.paginator.num_pages }}
+        </p>
+      </div>
+    {% endif %}
+
   </div>
 </div>
 {% endblock %}

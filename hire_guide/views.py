@@ -36,7 +36,7 @@ def guide_list(request):
     divisions = Guide.objects.values_list('division', flat=True).distinct()
     
     # Pagination
-    paginator = Paginator(guides, 12)
+    paginator = Paginator(guides, 6)
     page_number = request.GET.get('page')
     guides = paginator.get_page(page_number)
     
