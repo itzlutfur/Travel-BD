@@ -7,31 +7,31 @@
   <!-- Background Pattern -->
   <div class="absolute inset-0 opacity-5">
     <div
-      class="absolute top-10 left-10 w-20 h-20 bg-blue-500 rounded-full"
+      class="absolute top-4 left-4 sm:top-10 sm:left-10 w-8 h-8 sm:w-20 sm:h-20 bg-blue-500 rounded-full"
     ></div>
     <div
-      class="absolute top-32 right-20 w-16 h-16 bg-green-500 rounded-full"
+      class="absolute top-16 right-8 sm:top-32 sm:right-20 w-6 h-6 sm:w-16 sm:h-16 bg-green-500 rounded-full"
     ></div>
     <div
-      class="absolute bottom-20 left-1/4 w-12 h-12 bg-yellow-500 rounded-full"
+      class="absolute bottom-8 left-1/4 w-4 h-4 sm:w-12 sm:h-12 bg-yellow-500 rounded-full"
     ></div>
     <div
-      class="absolute bottom-32 right-1/3 w-24 h-24 bg-purple-500 rounded-full"
+      class="absolute bottom-16 right-1/3 w-10 h-10 sm:w-24 sm:h-24 bg-purple-500 rounded-full"
     ></div>
   </div>
 
-  <div class="container mx-auto px-4 py-20">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
+  <div class="container mx-auto px-4 py-8 sm:py-12 lg:py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       <!-- Left Content -->
-      <div class="text-center lg:text-left">
+      <div class="text-center lg:text-left order-2 lg:order-1">
         <h1
-          class="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight mb-6"
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6"
         >
           Discover
           <span class="text-blue-600">Beautiful</span>
           <br />Bangladesh
         </h1>
-        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+        <p class="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
           Experience the natural beauty, rich culture, and warm hospitality of
           Bangladesh. From pristine beaches to lush hills, create memories that
           last a lifetime.
@@ -39,65 +39,65 @@
 
         <!-- CTA Buttons -->
         <div
-          class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
+          class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-8"
         >
           <a
             href="{% url 'destination:destination_list' %}"
-            class="bg-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-700 transform hover:scale-105 transition duration-300 shadow-lg"
+            class="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-blue-700 transform hover:scale-105 transition duration-300 shadow-lg text-center"
           >
             Explore Destinations
           </a>
           <a
             href="{% url 'hire_guide:guides' %}"
-            class="bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-50 transition duration-300"
+            class="bg-white text-blue-600 border-2 border-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-blue-50 transition duration-300 text-center"
           >
             Find Local Guides
           </a>
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
+        <div class="grid grid-cols-3 gap-3 sm:gap-6 max-w-xs sm:max-w-md mx-auto lg:mx-0">
           <div class="text-center">
-            <div class="text-2xl font-bold text-gray-900">
+            <div class="text-lg sm:text-2xl font-bold text-gray-900">
               {{ total_destinations|default:"500+" }}
             </div>
-            <div class="text-sm text-gray-600">Destinations</div>
+            <div class="text-xs sm:text-sm text-gray-600">Destinations</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-gray-900">
+            <div class="text-lg sm:text-2xl font-bold text-gray-900">
               {{ total_guides|default:"200+" }}
             </div>
-            <div class="text-sm text-gray-600">Expert Guides</div>
+            <div class="text-xs sm:text-sm text-gray-600">Expert Guides</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-gray-900">
+            <div class="text-lg sm:text-2xl font-bold text-gray-900">
               {{ happy_travelers|default:"10K+" }}
             </div>
-            <div class="text-sm text-gray-600">Happy Travelers</div>
+            <div class="text-xs sm:text-sm text-gray-600">Happy Travelers</div>
           </div>
         </div>
       </div>
 
       <!-- Right Image -->
-      <div class="relative">
+      <div class="relative order-1 lg:order-2">
         <div class="relative z-10">
           <img
-            src="{% static 'images/Heroimage.png' %}"
+            src="{% static 'images/bangladesh.jpeg' %}"
             alt="Bangladesh Tourism"
-            class="w-full max-w-lg mx-auto rounded-3xl shadow-2xl"
+            class="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] xl:h-[600px] max-w-sm sm:max-w-md lg:max-w-lg mx-auto rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl bg-red-100 object-cover"
           />
         </div>
 
         <!-- Floating Cards -->
         <div
-          class="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-lg z-20 hidden lg:block"
+          class="absolute -top-3 -right-3 sm:-top-6 sm:-right-6 bg-white p-2 sm:p-4 rounded-xl sm:rounded-2xl shadow-lg z-20 hidden md:block"
         >
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-2 sm:space-x-3">
             <div
-              class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+              class="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center"
             >
               <svg
-                class="w-6 h-6 text-green-600"
+                class="w-4 h-4 sm:w-6 sm:h-6 text-green-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -111,21 +111,21 @@
               </svg>
             </div>
             <div>
-              <div class="font-semibold text-gray-900">Verified Guides</div>
-              <div class="text-sm text-gray-600">Trusted & Experienced</div>
+              <div class="font-semibold text-gray-900 text-xs sm:text-base">Verified Guides</div>
+              <div class="text-xs sm:text-sm text-gray-600">Trusted & Experienced</div>
             </div>
           </div>
         </div>
 
         <div
-          class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-lg z-20 hidden lg:block"
+          class="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-white p-2 sm:p-4 rounded-xl sm:rounded-2xl shadow-lg z-20 hidden md:block"
         >
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-2 sm:space-x-3">
             <div
-              class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"
+              class="w-8 h-8 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center"
             >
               <svg
-                class="w-6 h-6 text-blue-600"
+                class="w-4 h-4 sm:w-6 sm:h-6 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -139,8 +139,8 @@
               </svg>
             </div>
             <div>
-              <div class="font-semibold text-gray-900">24/7 Support</div>
-              <div class="text-sm text-gray-600">Always Here to Help</div>
+              <div class="font-semibold text-gray-900 text-xs sm:text-base">24/7 Support</div>
+              <div class="text-xs sm:text-sm text-gray-600">Always Here to Help</div>
             </div>
           </div>
         </div>
@@ -314,7 +314,7 @@
 
 <!-- Top Destinations Section -->
 <section class="py-20 bg-gray-50 container">
-  <div class=" mx-auto px-4 w-full">
+  <div class="mx-auto px-4 w-full">
     <!-- Section Header -->
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
