@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
-<div class="min-h-screen bg-gray-50 py-12">
+<div class="min-h-screen bg-gray-50 py-12 container">
   <div class="max-w-4xl mx-auto px-4">
     <div class="text-center mb-8">
       <!-- Success Icon -->
@@ -47,7 +47,10 @@
             <div class="flex justify-between border-b pb-2">
               <span class="text-gray-600">Location:</span>
               <span class="font-medium">
-                {{ booking.destination.location|default_if_none:"" }}, {{ booking.destination.district|default_if_none:"" }}
+                {{ booking.destination.location|default_if_none:"" }},
+                <span
+                  >{{ booking.destination.district|default_if_none:"" }}</span
+                >
               </span>
             </div>
             <div class="flex justify-between border-b pb-2">
@@ -253,7 +256,7 @@
     <!-- Contact Information -->
     <div class="text-center mt-8 text-gray-600">
       <p class="mb-2">Need help? Contact us:</p>
-      <p class="font-medium">📧 support@travelbd.com | 📞 +880-XXX-XXXXXX</p>
+      <p class="font-medium">📧 support@travelbd.com | 📞 +8801763524424</p>
     </div>
   </div>
 </div>
