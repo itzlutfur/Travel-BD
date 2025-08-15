@@ -329,19 +329,10 @@ chmod +x manage.py
 
 Check Django logs in the console or configure logging in settings.py.
 
-## 📞 Support
-
-### Getting Help
-
-- Check the [Wiki](https://github.com/yourusername/travel-bd-django/wiki)
-- Open an [Issue](https://github.com/yourusername/travel-bd-django/issues)
-- Join our [Discord](https://discord.gg/travel-bd)
-
 ### Contact
 
-- **Email**: support@travel-bd.com
-- **Website**: https://travel-bd.com
-- **Documentation**: https://docs.travel-bd.com
+- **Email**: tanvir15-5649@diu.edu.bd
+- **Phone**: +8801580875406
 
 ## 📄 License
 
