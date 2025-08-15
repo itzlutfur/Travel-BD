@@ -9,6 +9,3 @@ class DestinationView(TemplateView):
 
 class AboutView(TemplateView):
     template_name = "about.html"
-    
-class FeatureView(TemplateView):
-    template_name = "feature.html"

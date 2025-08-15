@@ -18,13 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import HomeView, AboutView, FeatureView
+from .views import HomeView, AboutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
-    path('feature/', FeatureView.as_view(), name='feature'),
     path('auth/', include('authentication.urls')),
     path('booking/', include('tour_booking.urls')),
     path('destinations/', include('destination.urls')),

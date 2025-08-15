@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Destination
+from .models import Destination, Payment
 
 
 @admin.register(Destination)
@@ -31,3 +31,47 @@ class DestinationAdmin(admin.ModelAdmin):
             'fields': ('featured', 'is_active', 'created_at', 'updated_at')
         }),
     )
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ['transaction_id', 'amount', 'payment_method', 'status', 'created_at']
+    list_filter = ['payment_method', 'status', 'created_at']
+    search_fields = ['transaction_id', 'amount']
+    readonly_fields = ['transaction_id', 'created_at', 'updated_at']
+    date_hierarchy = 'created_at'
+    
+    fieldsets = (
+        ('Payment Information', {
+            'fields': ('transaction_id', 'amount', 'payment_method')
+        }),
+        ('Status', {
+            'fields': ('status',)
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    # Additional admin options
+    list_per_page = 25
+    ordering = ['-created_at']
+    
+    # Custom actions
+    actions = ['mark_as_completed', 'mark_as_failed', 'mark_as_refunded']
+    
+    def mark_as_completed(self, request, queryset):
+        queryset.update(status='completed')
+        self.message_user(request, f'{queryset.count()} payments marked as completed.')
+    mark_as_completed.short_description = "Mark selected payments as completed"
+    
+    def mark_as_failed(self, request, queryset):
+        queryset.update(status='failed')
+        self.message_user(request, f'{queryset.count()} payments marked as failed.')
+    mark_as_failed.short_description = "Mark selected payments as failed"
+    
+    def mark_as_refunded(self, request, queryset):
+        queryset.update(status='refunded')
+        self.message_user(request, f'{queryset.count()} payments marked as refunded.')
+    mark_as_refunded.short_description = "Mark selected payments as refunded"

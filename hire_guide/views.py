@@ -144,4 +144,4 @@ def booking_confirmation(request, booking_id):
     context = {
         'booking': booking,
     }
-    return render(request, 'booking_confirmation.html', context)
+    return render(request, 'guide_booking_confirmation.html', context)
