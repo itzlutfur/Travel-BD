@@ -1,0 +1,582 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Back Button -->
+    <div class="mb-6">
+      <a
+        href="{% url 'hire_guide:guides' %}"
+        class="inline-flex items-center text-blue-600 hover:text-blue-800 transition duration-200"
+      >
+        <svg
+          class="w-5 h-5 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          ></path>
+        </svg>
+        Back to Guides
+      </a>
+    </div>
+
+    <!-- Guide Profile Card -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="md:flex">
+        <!-- Profile Image -->
+        <div class="md:w-1/3">
+          <div class="h-64 md:h-full relative">
+            {% if guide.profile_image %}
+            <img
+              src="{{ guide.profile_image.url }}"
+              alt="{{ guide.name }}"
+              class="w-full h-full object-cover"
+            />
+            {% else %}
+            <div
+              class="w-full h-full bg-gray-200 flex items-center justify-center"
+            >
+              <svg
+                class="w-32 h-32 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            {% endif %} {% if guide.featured %}
+            <span
+              class="absolute top-4 left-4 bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-semibold"
+            >
+              Featured Guide
+            </span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Guide Information -->
+        <div class="md:w-2/3 p-8">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                {{ guide.name }}
+              </h1>
+              <p class="text-lg text-blue-600 font-medium">
+                {{ guide.get_specialization_display }} Specialist
+              </p>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-gray-900">
+                ৳{{ guide.daily_rate }}
+              </div>
+              <div class="text-sm text-gray-600">per day</div>
+            </div>
+          </div>
+
+          <!-- Rating -->
+          <div class="flex items-center mb-4">
+            <div class="flex items-center">
+              {% for i in "12345" %} {% if guide.rating >= i|floatformat:0 %}
+              <svg
+                class="w-5 h-5 text-yellow-400 fill-current"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+                />
+              </svg>
+              {% else %}
+              <svg
+                class="w-5 h-5 text-gray-300 fill-current"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+                />
+              </svg>
+              {% endif %} {% endfor %}
+              <span class="ml-2 text-lg text-gray-700"
+                >{{ guide.rating }}/5.0</span
+              >
+              <span class="ml-1 text-gray-600"
+                >({{ guide.total_tours }} tours completed)</span
+              >
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="flex items-center text-gray-600 mb-4">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span
+              >{{ guide.location }}, {{ guide.district }},
+              <span>{{ guide.division }}</span></span
+            >
+          </div>
+
+          <!-- Experience -->
+          <div class="flex items-center text-gray-600 mb-6">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ guide.get_experience_level_display }} Experience</span>
+          </div>
+
+          <!-- Contact Buttons -->
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="tel:{{ guide.phone }}"
+              class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200 font-medium"
+            >
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+                ></path>
+              </svg>
+              Call Now
+            </a>
+            {% if guide.email %}
+            <a
+              href="mailto:{{ guide.email }}"
+              class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 font-medium"
+            >
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                ></path>
+                <path
+                  d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                ></path>
+              </svg>
+              Send Email
+            </a>
+            {% endif %}
+            <a
+              href="https://wa.me/{{ guide.phone|slice:'1:' }}"
+              target="_blank"
+              class="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200 font-medium"
+            >
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
+                />
+              </svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Information -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- About Section -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            About {{ guide.name }}
+          </h2>
+          <p class="text-gray-700 leading-relaxed">{{ guide.bio }}</p>
+        </div>
+
+        <!-- Languages - Display as simple text -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Languages Spoken</h3>
+          <p class="text-gray-700 text-lg">{{ guide.languages }}</p>
+        </div>
+      </div>
+
+      <!-- Quick Info Sidebar -->
+      <div class="space-y-6">
+        <!-- Quick Stats -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Quick Info</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Specialization:</span>
+              <span class="font-medium text-gray-900"
+                >{{ guide.get_specialization_display }}</span
+              >
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Experience:</span>
+              <span class="font-medium text-gray-900"
+                >{{ guide.get_experience_level_display }}</span
+              >
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Tours Completed:</span>
+              <span class="font-medium text-gray-900"
+                >{{ guide.total_tours }}</span
+              >
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Rating:</span>
+              <span class="font-medium text-gray-900"
+                >{{ guide.rating }}/5.0</span
+              >
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Daily Rate:</span>
+              <span class="font-medium text-gray-900"
+                >৳{{ guide.daily_rate }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Contact Information
+          </h3>
+          <div class="space-y-3">
+            <div class="flex items-center">
+              <svg
+                class="w-5 h-5 text-gray-400 mr-3"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+                ></path>
+              </svg>
+              <span class="text-gray-900">{{ guide.phone }}</span>
+            </div>
+            {% if guide.email %}
+            <div class="flex items-center">
+              <svg
+                class="w-5 h-5 text-gray-400 mr-3"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                ></path>
+                <path
+                  d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                ></path>
+              </svg>
+              <span class="text-gray-900">{{ guide.email }}</span>
+            </div>
+            {% endif %}
+            <div class="flex items-center">
+              <svg
+                class="w-5 h-5 text-gray-400 mr-3"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-gray-900"
+                >{{ guide.location }}, {{ guide.district }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Hire Section -->
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-yellow-800 mb-2">
+            Ready to Hire?
+          </h3>
+          <p class="text-yellow-700 text-sm mb-4">
+            Hire {{ guide.name }} for your adventure and pay securely online.
+          </p>
+          <button
+            onclick="openBookingModal()"
+            class="w-full inline-flex justify-center items-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-200 font-medium"
+          >
+            Hire Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Modal -->
+<div
+  id="bookingModal"
+  class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50"
+>
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div
+      class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-screen overflow-y-auto"
+    >
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-900">
+            Hire {{ guide.name }}
+          </h3>
+          <button
+            onclick="closeBookingModal()"
+            class="text-gray-400 hover:text-gray-600"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <form
+          method="post"
+          action="#"
+          id="bookingForm"
+        >
+          {% csrf_token %}
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="customer_name"
+                required
+                value="{% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% endif %}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter your full name"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                name="customer_email"
+                required
+                value="{% if user.is_authenticated %}{{ user.email }}{% endif %}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="your.email@example.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Phone
+              </label>
+              <input
+                type="tel"
+                name="customer_phone"
+                required
+                value="{% if user.is_authenticated and user.profile.phone %}{{ user.profile.phone }}{% endif %}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="+880..."
+              />
+              <p class="text-xs text-gray-500 mt-1">
+                Include country code (e.g., +880)
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >Start Date</label
+                >
+                <input
+                  type="date"
+                  name="start_date"
+                  required
+                  min="{{ today|date:'Y-m-d' }}"
+                  onchange="calculateTotal()"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1"
+                  >End Date</label
+                >
+                <input
+                  type="date"
+                  name="end_date"
+                  required
+                  min="{{ today|date:'Y-m-d' }}"
+                  onchange="calculateTotal()"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Group Size</label
+              >
+              <input
+                type="number"
+                name="group_size"
+                min="1"
+                max="25"
+                value="1"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <p class="text-xs text-gray-500 mt-1">
+                Maximum 25 people allowed
+              </p>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Special Requirements</label
+              >
+              <textarea
+                name="special_requirements"
+                rows="3"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Any special requirements or preferences..."
+              ></textarea>
+            </div>
+
+            <!-- Price Calculation -->
+            <div class="border-t pt-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-600">Daily Rate:</span>
+                <span class="font-medium">৳{{ guide.daily_rate }}</span>
+              </div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-600">Days:</span>
+                <span class="font-medium" id="totalDays">0</span>
+              </div>
+              <div
+                class="flex justify-between items-center text-lg font-bold border-t pt-2"
+              >
+                <span>Total Amount:</span>
+                <span id="totalAmount">৳0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex gap-3">
+            <button
+              type="button"
+              onclick="closeBookingModal()"
+              class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+            >
+              Proceed to Payment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openBookingModal() {
+    document.getElementById("bookingModal").classList.remove("hidden");
+  }
+
+  function closeBookingModal() {
+    document.getElementById("bookingModal").classList.add("hidden");
+  }
+
+  // Calculate total amount
+  function calculateTotal() {
+    const startDate = document.querySelector('[name="start_date"]').value;
+    const endDate = document.querySelector('[name="end_date"]').value;
+    const dailyRate = parseFloat("{{ guide.daily_rate }}");
+
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const timeDiff = end.getTime() - start.getTime();
+      const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+      if (days > 0) {
+        document.getElementById("totalDays").textContent = days;
+        document.getElementById("totalAmount").textContent =
+          "৳" + (days * dailyRate).toLocaleString();
+      } else {
+        document.getElementById("totalDays").textContent = "0";
+        document.getElementById("totalAmount").textContent = "৳0";
+      }
+    }
+  }
+
+  // Validate end date is after start date
+  function validateDates() {
+    const startDate = document.querySelector('[name="start_date"]');
+    const endDate = document.querySelector('[name="end_date"]');
+
+    if (startDate.value && endDate.value) {
+      if (new Date(endDate.value) <= new Date(startDate.value)) {
+        endDate.setCustomValidity("End date must be after start date");
+      } else {
+        endDate.setCustomValidity("");
+      }
+    }
+  }
+
+  // Add event listeners when document loads
+  document.addEventListener("DOMContentLoaded", function () {
+    const startDateInput = document.querySelector('[name="start_date"]');
+    const endDateInput = document.querySelector('[name="end_date"]');
+
+    if (startDateInput && endDateInput) {
+      startDateInput.addEventListener("change", function () {
+        // Set minimum end date to be after start date
+        endDateInput.min = this.value;
+        validateDates();
+        calculateTotal();
+      });
+
+      endDateInput.addEventListener("change", function () {
+        validateDates();
+        calculateTotal();
+      });
+    }
+  });
+
+  // Close modal when clicking outside
+  document
+    .getElementById("bookingModal")
+    .addEventListener("click", function (e) {
+      if (e.target === this) {
+        closeBookingModal();
+      }
+    });
+</script>
+
+{% endblock %}
