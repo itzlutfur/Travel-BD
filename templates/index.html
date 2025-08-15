@@ -1,259 +1,840 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
+
 <!-- Hero Section -->
-<div class="bg-gray-100 w-full">
-  <div class="w-4/5 mx-auto pt-28">
-    <h1
-      class="text-6xl md:text-8xl font-bold mb-5 text-center text-black leading-tight"
-    >
-      Lifelong Memories Just A Few Days Away
-    </h1>
-    <section class="flex justify-between items-center py-10 flex-wrap">
-      <div class="flex-1">
-        <img
-          src="{% static 'images/Heroimage.png' %}"
-          class="w-full max-w-[620px]"
-        />
+<section
+  class="relative bg-gradient-to-br from-blue-50 via-white to-green-50 min-h-screen flex items-center overflow-hidden"
+>
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <div
+      class="absolute top-10 left-10 w-20 h-20 bg-blue-500 rounded-full"
+    ></div>
+    <div
+      class="absolute top-32 right-20 w-16 h-16 bg-green-500 rounded-full"
+    ></div>
+    <div
+      class="absolute bottom-20 left-1/4 w-12 h-12 bg-yellow-500 rounded-full"
+    ></div>
+    <div
+      class="absolute bottom-32 right-1/3 w-24 h-24 bg-purple-500 rounded-full"
+    ></div>
+  </div>
+
+  <div class="container mx-auto px-4 py-20">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Left Content -->
+      <div class="text-center lg:text-left">
+        <h1
+          class="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight mb-6"
+        >
+          Discover
+          <span class="text-blue-600">Beautiful</span>
+          <br />Bangladesh
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+          Experience the natural beauty, rich culture, and warm hospitality of
+          Bangladesh. From pristine beaches to lush hills, create memories that
+          last a lifetime.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
+        >
+          <a
+            href="{% url 'destination:destination_list' %}"
+            class="bg-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-700 transform hover:scale-105 transition duration-300 shadow-lg"
+          >
+            Explore Destinations
+          </a>
+          <a
+            href="{% url 'hire_guide:guides' %}"
+            class="bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-50 transition duration-300"
+          >
+            Find Local Guides
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
+          <div class="text-center">
+            <div class="text-2xl font-bold text-gray-900">
+              {{ total_destinations|default:"500+" }}
+            </div>
+            <div class="text-sm text-gray-600">Destinations</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-gray-900">
+              {{ total_guides|default:"200+" }}
+            </div>
+            <div class="text-sm text-gray-600">Expert Guides</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-gray-900">
+              {{ happy_travelers|default:"10K+" }}
+            </div>
+            <div class="text-sm text-gray-600">Happy Travelers</div>
+          </div>
+        </div>
       </div>
-      <div class="flex-1 pl-10">
-        <div class="flex flex-col gap-5">
-          <div class="flex items-center gap-4">
-            <img
-              src="{% static 'images/room.jpeg' %}"
-              alt="Room"
-              class="w-20 h-20 rounded-full object-cover"
-            />
-            <div class="feature-text">
-              <h3 class="m-0 text-2xl font-bold text-black">Room Booking</h3>
-              <p class="mt-4 text-gray-600 text-sm">
-                Book your favourite room in Chattagram
-              </p>
+
+      <!-- Right Image -->
+      <div class="relative">
+        <div class="relative z-10">
+          <img
+            src="{% static 'images/Heroimage.png' %}"
+            alt="Bangladesh Tourism"
+            class="w-full max-w-lg mx-auto rounded-3xl shadow-2xl"
+          />
+        </div>
+
+        <!-- Floating Cards -->
+        <div
+          class="absolute -top-6 -right-6 bg-white p-4 rounded-2xl shadow-lg z-20 hidden lg:block"
+        >
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900">Verified Guides</div>
+              <div class="text-sm text-gray-600">Trusted & Experienced</div>
             </div>
           </div>
-          <div class="flex items-center gap-4">
-            <img
-              src="{% static 'images/guide.jpg' %}"
-              alt="Guide"
-              class="w-20 h-20 rounded-full object-cover"
-            />
-            <div class="feature-text">
-              <h3 class="m-0 text-2xl font-bold text-black">Local Guide</h3>
-              <p class="mt-4 text-gray-600 text-sm">Meet your Guide</p>
+        </div>
+
+        <div
+          class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-lg z-20 hidden lg:block"
+        >
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
             </div>
-          </div>
-          <div class="flex items-center gap-4">
-            <img
-              src="{% static 'images/car.jpg' %}"
-              alt="Car"
-              class="w-20 h-20 rounded-full object-cover"
-            />
-            <div class="feature-text">
-              <h3 class="m-0 text-2xl font-bold text-black">Book your car</h3>
-              <p class="mt-4 text-gray-600 text-sm">
-                Start your journey today—no waiting, no hassle.
-              </p>
+            <div>
+              <div class="font-semibold text-gray-900">24/7 Support</div>
+              <div class="text-sm text-gray-600">Always Here to Help</div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- Discover Nature -->
-<section class="text-center py-16 px-5 bg-white w-4/5 mx-auto">
-  <h2 class="text-5xl font-bold mb-10 text-black">
-    Discover the touch of Nature
-  </h2>
-  <div class="flex justify-center flex-wrap gap-8">
-    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
-      <img
-        src="{% static 'images/cox.jpg' %}"
-        alt="Cox's Bazar"
-        class="w-full h-full object-cover block"
-      />
-      <div
-        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
-      >
-        📍 Cox's Bazar
-      </div>
+<!-- Featured Guides Section -->
+<section class="py-20 bg-white container">
+  <div class="mx-auto px-4">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Meet Our <span class="text-blue-600">Expert Guides</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Connect with experienced local guides who know Bangladesh like the back
+        of their hand
+      </p>
     </div>
-    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
-      <img
-        src="{% static 'images/saint.jpg' %}"
-        alt="Saint Martin"
-        class="w-full h-full object-cover block"
-      />
+
+    <!-- Guides Grid - Updated for 4 guides -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      {% for guide in featured_guides %}
       <div
-        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
+        class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100"
       >
-        📍 Saint Martin
+        <div class="relative h-64">
+          {% if guide.profile_image %}
+          <img
+            src="{{ guide.profile_image.url }}"
+            alt="{{ guide.name }}"
+            class="w-full h-full object-cover"
+          />
+          {% else %}
+          <div
+            class="w-full h-full bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center"
+          >
+            <svg
+              class="w-20 h-20 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          {% endif %} {% if guide.featured %}
+          <div
+            class="absolute top-4 left-4 bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-semibold"
+          >
+            Featured
+          </div>
+          {% endif %}
+
+          <div
+            class="absolute top-4 right-4 bg-black bg-opacity-75 text-white px-3 py-1 rounded-full text-sm"
+          >
+            {{ guide.get_specialization_display }}
+          </div>
+        </div>
+
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            {{ guide.name }}
+          </h3>
+          <p class="text-gray-600 mb-3 flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            {{ guide.location }}, <span>{{ guide.district }}</span>
+          </p>
+
+          <div class="flex items-center mb-4">
+            <div class="flex text-yellow-400">
+              {% for i in "12345" %} {% if guide.rating >= i|floatformat:0 %}
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                <path
+                  d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+                />
+              </svg>
+              {% else %}
+              <svg
+                class="w-4 h-4 text-gray-300 fill-current"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+                />
+              </svg>
+              {% endif %} {% endfor %}
+            </div>
+            <span class="ml-2 text-sm text-gray-600"
+              >{{ guide.rating|floatformat:1 }} ({{ guide.total_tours }}
+              tour<span>{{ guide.total_tours|pluralize }}</span> )</span
+            >
+          </div>
+
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-2xl font-bold text-gray-900"
+                >৳{{ guide.daily_rate|floatformat:0 }}</span
+              >
+              <span class="text-gray-600">/day</span>
+            </div>
+            <a
+              href="{% url 'hire_guide:guide_detail' guide.slug %}"
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+            >
+              View Profile
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
-      <img
-        src="{% static 'images/ranga.jpg' %}"
-        alt="Rangamati"
-        class="w-full h-full object-cover block"
-      />
-      <div
-        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
-      >
-        📍 Rangamati
+      {% empty %}
+      <!-- Fallback if no guides available -->
+      <div class="col-span-full text-center py-12">
+        <svg
+          class="w-16 h-16 text-gray-400 mx-auto mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+          ></path>
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">
+          No Guides Available
+        </h3>
+        <p class="text-gray-600">Check back soon for amazing local guides!</p>
       </div>
+      {% endfor %}
     </div>
-    <div class="relative w-56 h-80 rounded-2xl overflow-hidden shadow-md">
-      <img
-        src="{% static 'images/sajek.jpg' %}"
-        alt="Sajek Valley"
-        class="w-full h-full object-cover block"
-      />
-      <div
-        class="absolute top-4 left-4 bg-white text-gray-800 py-2 px-3 rounded-full text-sm font-medium shadow-sm"
+
+    <!-- View All Button -->
+    <div class="text-center">
+      <a
+        href="{% url 'hire_guide:guides' %}"
+        class="inline-flex items-center bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition duration-300"
       >
-        📍 Sajek Valley
+        View All Guides
+        <svg
+          class="w-5 h-5 ml-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Top Destinations Section -->
+<section class="py-20 bg-gray-50 container">
+  <div class=" mx-auto px-4 w-full">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Top <span class="text-green-600">Destinations</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Discover the most beautiful and popular destinations across Bangladesh
+      </p>
+    </div>
+
+    <!-- Destinations Grid -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-12"
+    >
+      {% for destination in featured_destinations %}
+      <div
+        class="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+      >
+        <div class="relative h-72 overflow-hidden">
+          {% if destination.main_image %}
+          <img
+            src="{{ destination.main_image.url }}"
+            alt="{{ destination.name }}"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          {% else %}
+          <div
+            class="w-full h-full bg-gradient-to-br from-green-200 via-blue-200 to-purple-200 flex items-center justify-center group-hover:scale-110 transition-transform duration-700"
+          >
+            <svg
+              class="w-20 h-20 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </div>
+          {% endif %}
+
+          <!-- Gradient Overlay -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+          ></div>
+
+          <!-- Category Badge -->
+          <div
+            class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
+          >
+            {{ destination.get_category_display }}
+          </div>
+
+          <!-- Heart Icon (Optional - for favorites) -->
+          <div
+            class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/30 transition-all duration-300"
+          >
+            <svg
+              class="w-5 h-5 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              ></path>
+            </svg>
+          </div>
+
+          <!-- Content Overlay -->
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+            <h3
+              class="text-2xl font-bold mb-2 group-hover:text-green-300 transition-colors duration-300"
+            >
+              {{ destination.name }}
+            </h3>
+            <p class="text-sm opacity-90 mb-3 line-clamp-2">
+              {{ destination.short_description|truncatechars:50 }}
+            </p>
+
+            <!-- Location -->
+            <div class="flex items-center text-sm opacity-80 mb-4">
+              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              {{ destination.location }}, {{ destination.district }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="p-6">
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-sm text-gray-500 mb-1">Starting from</span>
+              <span class="text-2xl font-bold text-gray-900"
+                >৳{{ destination.tour_price|floatformat:0 }}</span
+              >
+            </div>
+            <a
+              href="{% url 'destination:destination_detail' destination.slug %}"
+              class="bg-green-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Explore
+            </a>
+          </div>
+
+          <!-- Additional Info -->
+          <div class="mt-4 pt-4 border-t border-gray-100">
+            <div
+              class="flex items-center justify-between text-sm text-gray-600"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                {% if destination.tour_duration_days %}
+                <span>{{ destination.tour_duration_days }}</span> day<span
+                  >{{ destination.tour_duration_days|pluralize }}</span
+                >
+                {% else %}{{ destination.duration|default:"1 day" }}{% endif %}
+              </div>
+              <div class="flex items-center">
+                <svg
+                  class="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  ></path>
+                </svg>
+                {% if destination.max_group_size %} Max
+                <span>{{ destination.max_group_size }}</span> {% else %} Group
+                tours {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <!-- Enhanced Fallback Design -->
+      <div class="col-span-full">
+        <div class="text-center py-20">
+          <div
+            class="w-24 h-24 bg-gradient-to-br from-green-200 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-6"
+          >
+            <svg
+              class="w-12 h-12 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">
+            No Destinations Available
+          </h3>
+          <p class="text-gray-600 text-lg mb-8 max-w-md mx-auto">
+            We're working hard to bring you amazing destinations. Check back
+            soon!
+          </p>
+          <a
+            href="{% url 'destination:destination_list' %}"
+            class="inline-flex items-center bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition duration-300"
+          >
+            Browse All Destinations
+            <svg
+              class="w-5 h-5 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- View All Button with Enhanced Design -->
+    <div class="text-center">
+      <a
+        href="{% url 'destination:destination_list' %}"
+        class="group inline-flex items-center bg-gradient-to-r from-green-600 to-green-700 text-white px-10 py-4 rounded-full font-semibold text-lg hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+      >
+        <span>View All Destinations</span>
+        <svg
+          class="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Why Choose <span class="text-blue-600">Travel BD</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        We make your travel experience memorable with our premium services
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div
+        class="text-center p-8 bg-blue-50 rounded-2xl hover:bg-blue-100 transition duration-300"
+      >
+        <div
+          class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Verified Guides</h3>
+        <p class="text-gray-600">
+          All our guides are thoroughly verified and experienced professionals
+          who ensure your safety and enjoyment.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div
+        class="text-center p-8 bg-green-50 rounded-2xl hover:bg-green-100 transition duration-300"
+      >
+        <div
+          class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Best Prices</h3>
+        <p class="text-gray-600">
+          Get the best value for your money with our competitive pricing and
+          transparent booking system.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div
+        class="text-center p-8 bg-purple-50 rounded-2xl hover:bg-purple-100 transition duration-300"
+      >
+        <div
+          class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-4">24/7 Support</h3>
+        <p class="text-gray-600">
+          Our dedicated support team is available round the clock to assist you
+          with any queries or emergencies.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div
+        class="text-center p-8 bg-yellow-50 rounded-2xl hover:bg-yellow-100 transition duration-300"
+      >
+        <div
+          class="w-16 h-16 bg-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Local Expertise</h3>
+        <p class="text-gray-600">
+          Discover hidden gems and authentic experiences with guides who know
+          their regions intimately.
+        </p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div
+        class="text-center p-8 bg-red-50 rounded-2xl hover:bg-red-100 transition duration-300"
+      >
+        <div
+          class="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-4">Safe & Secure</h3>
+        <p class="text-gray-600">
+          Your safety is our priority. We ensure secure payments and maintain
+          high safety standards.
+        </p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div
+        class="text-center p-8 bg-indigo-50 rounded-2xl hover:bg-indigo-100 transition duration-300"
+      >
+        <div
+          class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-4">
+          Memorable Experiences
+        </h3>
+        <p class="text-gray-600">
+          Create lifelong memories with personalized tours and authentic
+          cultural experiences.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- services section -->
+<!-- CTA Section -->
 <section
-  class="flex justify-between items-center py-20 px-10 flex-wrap bg-white gap-16"
+  class="container py-20 bg-gradient-to-r from-blue-600 to-green-600 relative overflow-hidden mb-20 rounded-xl"
 >
-  <div class="flex-1 min-w-80 max-w-[600px]">
-    <h2 class="text-7xl font-bold mb-10 text-black">
-      What services<br />we provide
-    </h2>
-
-    <div class="mb-8">
-      <h3 class="text-3xl mb-3 text-gray-900">
-        01. <strong>Travel Plan</strong>
-      </h3>
-      <p class="text-gray-600 text-base leading-relaxed">
-        Travel plans are not really an instrument themselves but a delivery
-        mechanism or strategy for mostly others
-      </p>
-    </div>
-
-    <div class="mb-8">
-      <h3 class="text-3xl mb-3 text-gray-900">
-        02. <strong>Car Booking</strong>
-      </h3>
-      <p class="text-gray-600 text-base leading-relaxed">
-        Discover your next ride with ease. Find great deals on local and
-        long-distance car bookings.
-      </p>
-    </div>
-
-    <div class="mb-8">
-      <h3 class="text-3xl mb-3 text-gray-900">
-        03. <strong>Accomodation</strong>
-      </h3>
-      <p class="text-gray-600 text-base leading-relaxed">
-        Lodging, food and services or travelling space and related services.
-      </p>
-    </div>
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full"></div>
+    <div class="absolute top-40 right-20 w-24 h-24 bg-white rounded-full"></div>
+    <div
+      class="absolute bottom-20 left-1/4 w-20 h-20 bg-white rounded-full"
+    ></div>
+    <div
+      class="absolute bottom-40 right-1/3 w-28 h-28 bg-white rounded-full"
+    ></div>
   </div>
 
-  <div class="flex-1 relative min-w-72 h-[500px]">
-    <img
-      src="https://i.pinimg.com/736x/c3/d3/3c/c3d33c9944f7bdbe8b83d932afe1a58a.jpg"
-      class="absolute top-0 left-1/5 w-44 h-44 rounded-full object-cover"
-      alt=""
-    />
-    <img
-      src="https://images.unsplash.com/photo-1579991155656-4647abc8d4b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-      class="absolute top-[10%] left-[70%] w-70 h-70 rounded-full object-cover"
-      alt=""
-    />
-    <img
-      src="https://images.unsplash.com/photo-1526918761918-da528d9558c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1076&q=80"
-      class="absolute top-[45%] left-[30%] w-40 h-40 rounded-full object-cover"
-      alt=""
-    />
-    <img
-      src="https://images.unsplash.com/photo-1553697388-94e804e2f0f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"
-      class="absolute bottom-0 left-[70%] w-30 h-30 rounded-full object-cover"
-      alt=""
-    />
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center">
+      <!-- Main Heading -->
+      <h2
+        class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+      >
+        Ready to Start Your
+        <span class="text-yellow-300">Adventure?</span>
+      </h2>
+
+      <!-- Subtitle -->
+      <p
+        class="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed"
+      >
+        Join thousands of travelers who have discovered the beauty of Bangladesh
+        with Travel BD
+      </p>
+
+      <!-- CTA Buttons -->
+      <div
+        class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
+      >
+        <a
+          href="{% url 'destination:destination_list' %}"
+          class="group bg-white text-blue-600 px-10 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 inline-flex items-center justify-center shadow-xl hover:shadow-2xl w-full sm:w-auto"
+        >
+          <svg
+            class="w-6 h-6 mr-3 group-hover:translate-x-1 transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+          </svg>
+          <span>Book Destination</span>
+        </a>
+
+        <a
+          href="{% url 'hire_guide:guides' %}"
+          class="group bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-blue-600 transform hover:scale-105 transition-all duration-300 inline-flex items-center justify-center w-full sm:w-auto"
+        >
+          <svg
+            class="w-6 h-6 mr-3 group-hover:translate-x-1 transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            ></path>
+          </svg>
+          <span>Find Guide</span>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- plan section -->
-<section
-  class="flex items-center justify-between py-20 px-5 gap-16 flex-wrap bg-white w-4/5 mx-auto"
->
-  <div class="bg-yellow-400 rounded-3xl overflow-hidden max-w-md w-full">
-    <img
-      src="{% static 'images/Tourist.png' %}"
-      alt="Traveler with Passport"
-      class="w-full h-auto block"
-    />
-  </div>
-  <div class="max-w-lg text-left">
-    <h2 class="text-5xl font-bold text-black mb-5 leading-tight">
-      Plan easy,<br />Play Less &<br />experience more
-    </h2>
-    <p class="text-gray-600 text-base leading-relaxed">
-      Traveling is important in life because it will open you up to a new way of
-      living and being. You will experience new connections with people and
-      places and immerse in different cultures, which can help widen your
-      perspective.
-    </p>
-  </div>
-</section>
-
-<!-- Responsive styles for mobile -->
-<style>
-  @media (max-width: 900px) {
-    .w-4\/5 {
-      width: 90% !important;
-    }
-
-    .flex-wrap section {
-      flex-direction: column !important;
-      text-align: center !important;
-    }
-
-    .text-6xl {
-      font-size: 3rem !important;
-    }
-
-    .pl-10 {
-      padding-left: 0 !important;
-    }
-
-    .flex-wrap .flex {
-      flex-direction: column !important;
-      text-align: center !important;
-    }
-
-    .absolute {
-      position: relative !important;
-      top: auto !important;
-      left: auto !important;
-      margin: 10px !important;
-    }
-
-    .w-44 {
-      width: 5rem !important;
-      height: 5rem !important;
-    }
-
-    .w-70 {
-      width: 11.25rem !important;
-      height: 11.25rem !important;
-    }
-
-    .w-40 {
-      width: 8.125rem !important;
-      height: 8.125rem !important;
-    }
-
-    .w-30 {
-      width: 6.25rem !important;
-      height: 6.25rem !important;
-    }
-  }
-</style>
 {% endblock %}
