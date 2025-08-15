@@ -108,6 +108,15 @@
               >DASHBOARD</a
             >
           </button>
+          <button
+            class="py-2 px-3 xl:px-4 bg-black border-none rounded-full text-xs xl:text-sm text-white cursor-pointer transition-colors duration-200 hover:bg-green-500"
+          >
+            <a
+              href="{% url 'authentication:logout' %}"
+              class="text-white no-underline"
+              >LOG OUT</a
+            >
+          </button>
         </div>
         {% else %}
         <div class="auth-buttons hidden lg:flex items-center gap-2">
