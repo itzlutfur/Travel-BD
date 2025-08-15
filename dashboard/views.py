@@ -8,21 +8,23 @@ from hire_guide.models import Booking
 def dashboard(request):
     user = request.user  # This gets the currently logged-in user
     
-    # These queries ONLY get data for the authenticated user
+    # Tour bookings - these have a user field
     tour_bookings = TourBooking.objects.filter(user=user).select_related('destination', 'payment').order_by('-booking_date')
-    guide_bookings = Booking.objects.filter(user=user).order_by('-booking_date')
+    
+    # Guide bookings - these don't have a user field, they store customer info separately
+    # We'll filter by customer_email since that's linked to the user's email
+    guide_bookings = Booking.objects.filter(customer_email=user.email).select_related('guide').order_by('-created_at')
     
     # All calculations are based on the filtered data for this user only
     tour_total = tour_bookings.aggregate(total=Sum('total_amount'))['total'] or 0
-    guide_total = guide_bookings.aggregate(total=Sum('total_cost'))['total'] or 0
+    guide_total = guide_bookings.aggregate(total=Sum('total_amount'))['total'] or 0  # Changed from 'total_cost' to 'total_amount'
     total_spent = tour_total + guide_total
     
     tour_count = tour_bookings.count()
     guide_count = guide_bookings.count()
     total_bookings = tour_count + guide_count
     
-    print(" the data", tour_count, guide_count)
-    
+    print("Dashboard data:", tour_count, guide_count)
     
     tour_status_counts = tour_bookings.values('status').annotate(count=Count('status'))
     

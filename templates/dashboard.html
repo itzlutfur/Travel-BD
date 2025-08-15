@@ -315,10 +315,11 @@
                     </div>
                     <div class="flex-1 min-w-0">
                       <h4 class="font-medium text-gray-900 truncate">
-                        {{ booking.guide_name }}
+                        {{ booking.guide.name }}
                       </h4>
                       <p class="text-sm text-gray-600 truncate">
-                        {{ booking.location }}
+                        {{ booking.guide.location }}, {{ booking.guide.district
+                        }}
                       </p>
                     </div>
                     <div class="flex-shrink-0">
@@ -335,7 +336,7 @@
                       {% else %}
                       <span
                         class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
-                        >Completed</span
+                        >{{ booking.get_status_display }}</span
                       >
                       {% endif %}
                     </div>
@@ -343,21 +344,22 @@
                   <div class="flex justify-between items-center text-sm">
                     <div>
                       <p class="text-gray-600">
-                        Service:
+                        Start Date:
                         <span class="font-medium text-gray-900"
-                          >{{ booking.service_date|date:"M d, Y" }}</span
+                          >{{ booking.start_date|date:"M d, Y" }}</span
                         >
                       </p>
                       <p class="text-gray-600">
-                        Duration: {{ booking.duration_hours }} hours
+                        Duration: {{ booking.get_total_days }} day{{
+                        booking.get_total_days|pluralize }}
                       </p>
                     </div>
                     <div class="text-right">
                       <p class="font-medium text-primary text-lg">
-                        ৳{{ booking.total_cost|floatformat:0 }}
+                        ৳{{ booking.total_amount|floatformat:0 }}
                       </p>
                       <p class="text-xs text-gray-500">
-                        {{ booking.get_guide_type_display }}
+                        {{ booking.guide.get_specialization_display }}
                       </p>
                     </div>
                   </div>
@@ -373,13 +375,14 @@
                     </div>
                     <div class="flex-1 min-w-0">
                       <h4 class="font-medium text-gray-900 truncate">
-                        {{ booking.guide_name }}
+                        {{ booking.guide.name }}
                       </h4>
                       <p class="text-sm text-gray-600 truncate">
-                        {{ booking.location }}
+                        {{ booking.guide.location }}, {{ booking.guide.district
+                        }}
                       </p>
                       <p class="text-xs text-gray-500">
-                        {{ booking.get_guide_type_display }}
+                        {{ booking.guide.get_specialization_display }}
                       </p>
                     </div>
                   </div>
@@ -387,13 +390,15 @@
                   <div class="flex items-center space-x-6 flex-shrink-0">
                     <div class="text-right">
                       <p class="text-sm font-medium text-gray-900">
-                        {{ booking.service_date|date:"M d, Y" }}
+                        {{ booking.start_date|date:"M d, Y" }} - {{
+                        booking.end_date|date:"M d, Y" }}
                       </p>
                       <p class="text-sm text-gray-600">
-                        {{ booking.duration_hours }} hours
+                        {{ booking.get_total_days }} day{{
+                        booking.get_total_days|pluralize }}
                       </p>
                       <p class="text-sm font-medium text-primary">
-                        ৳{{ booking.total_cost|floatformat:0 }}
+                        ৳{{ booking.total_amount|floatformat:0 }}
                       </p>
                     </div>
 
@@ -411,7 +416,7 @@
                       {% else %}
                       <span
                         class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
-                        >Completed</span
+                        >{{ booking.get_status_display }}</span
                       >
                       {% endif %}
                     </div>
@@ -428,7 +433,7 @@
                 Hire local experts for better experiences
               </p>
               <a
-                href="#"
+                href="{% url 'hire_guide:guides' %}"
                 class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200"
               >
                 <i class="fas fa-plus mr-2"></i>Hire your first guide
@@ -461,6 +466,23 @@
                   <p class="font-medium text-gray-900">Explore Destinations</p>
                   <p class="text-sm text-gray-600">
                     Find amazing places to visit
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href="{% url 'hire_guide:guides' %}"
+                class="flex items-center p-4 rounded-lg hover:bg-gray-50 transition duration-200 group border border-gray-100"
+              >
+                <div
+                  class="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition duration-200 flex-shrink-0"
+                >
+                  <i class="fas fa-user-tie text-green-600 text-lg"></i>
+                </div>
+                <div class="ml-4 min-w-0">
+                  <p class="font-medium text-gray-900">Hire Local Guide</p>
+                  <p class="text-sm text-gray-600">
+                    Get expert local assistance
                   </p>
                 </div>
               </a>
