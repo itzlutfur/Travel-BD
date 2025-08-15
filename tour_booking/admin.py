@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TourBooking, LocalGuideBooking
+from .models import TourBooking
 
 @admin.register(TourBooking)
 class TourBookingAdmin(admin.ModelAdmin):

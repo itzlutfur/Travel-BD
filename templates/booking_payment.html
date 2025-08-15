@@ -1,0 +1,319 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Payment - Booking
+{{ booking.booking_id }}{% endblock %} {% block body %}
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Progress Bar -->
+    <div class="mb-8">
+      <div class="flex items-center">
+        <div class="flex items-center text-blue-600">
+          <div
+            class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold"
+          >
+            1
+          </div>
+          <span class="ml-2 text-sm font-medium">Booking Details</span>
+        </div>
+        <div class="flex-1 h-0.5 bg-blue-600 mx-4"></div>
+        <div class="flex items-center text-blue-600">
+          <div
+            class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold"
+          >
+            2
+          </div>
+          <span class="ml-2 text-sm font-medium">Payment</span>
+        </div>
+        <div class="flex-1 h-0.5 bg-gray-300 mx-4"></div>
+        <div class="flex items-center text-gray-400">
+          <div
+            class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-semibold"
+          >
+            3
+          </div>
+          <span class="ml-2 text-sm font-medium">Confirmation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Payment Form -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            Complete Your Payment
+          </h2>
+
+          <form method="POST" id="paymentForm">
+            {% csrf_token %}
+
+            <!-- Payment Methods -->
+            <div class="mb-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                Select Payment Method
+              </h3>
+              <div class="grid grid-cols-2 gap-4">
+                <!-- bKash -->
+                <label class="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    value="bkash"
+                    class="sr-only peer"
+                    required
+                  />
+                  <div
+                    class="border-2 border-gray-200 rounded-lg p-4 hover:border-pink-500 peer-checked:border-pink-500 peer-checked:bg-pink-50 transition duration-200"
+                  >
+                    <div class="flex items-center justify-center">
+                      <div class="text-center">
+                        <div
+                          class="w-12 h-12 bg-pink-600 rounded-lg flex items-center justify-center mx-auto mb-2"
+                        >
+                          <span class="text-white font-bold">bK</span>
+                        </div>
+                        <span class="text-sm font-medium text-gray-900"
+                          >bKash</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                <!-- Nagad -->
+                <label class="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    value="nagad"
+                    class="sr-only peer"
+                    required
+                  />
+                  <div
+                    class="border-2 border-gray-200 rounded-lg p-4 hover:border-orange-500 peer-checked:border-orange-500 peer-checked:bg-orange-50 transition duration-200"
+                  >
+                    <div class="flex items-center justify-center">
+                      <div class="text-center">
+                        <div
+                          class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mx-auto mb-2"
+                        >
+                          <span class="text-white font-bold">N</span>
+                        </div>
+                        <span class="text-sm font-medium text-gray-900"
+                          >Nagad</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                <!-- Rocket -->
+                <label class="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    value="rocket"
+                    class="sr-only peer"
+                    required
+                  />
+                  <div
+                    class="border-2 border-gray-200 rounded-lg p-4 hover:border-purple-500 peer-checked:border-purple-500 peer-checked:bg-purple-50 transition duration-200"
+                  >
+                    <div class="flex items-center justify-center">
+                      <div class="text-center">
+                        <div
+                          class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mx-auto mb-2"
+                        >
+                          <span class="text-white font-bold">R</span>
+                        </div>
+                        <span class="text-sm font-medium text-gray-900"
+                          >Rocket</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                <!-- Credit/Debit Card -->
+                <label class="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    value="card"
+                    class="sr-only peer"
+                    required
+                  />
+                  <div
+                    class="border-2 border-gray-200 rounded-lg p-4 hover:border-blue-500 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition duration-200"
+                  >
+                    <div class="flex items-center justify-center">
+                      <div class="text-center">
+                        <div
+                          class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2"
+                        >
+                          <svg
+                            class="w-6 h-6 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <span class="text-sm font-medium text-gray-900"
+                          >Card</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="mb-6">
+              <label class="flex items-start">
+                <input
+                  type="checkbox"
+                  required
+                  class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <span class="ml-2 text-sm text-gray-600">
+                  I agree to the
+                  <a href="#" class="text-blue-600 hover:text-blue-800"
+                    >terms and conditions</a
+                  >
+                  and
+                  <a href="#" class="text-blue-600 hover:text-blue-800"
+                    >privacy policy</a
+                  >
+                </span>
+              </label>
+            </div>
+
+            <!-- Payment Button -->
+            <button
+              type="submit"
+              class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold text-lg"
+            >
+              Pay ৳{{ booking.total_amount|floatformat:0 }}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Booking Summary -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-lg shadow-md p-6 sticky top-8">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">
+            Booking Summary
+          </h3>
+
+          <!-- Guide Info -->
+          <div class="flex items-center mb-4 pb-4 border-b">
+            {% if booking.guide.profile_image %}
+            <img
+              src="{{ booking.guide.profile_image.url }}"
+              alt="{{ booking.guide.name }}"
+              class="w-12 h-12 rounded-full object-cover"
+            />
+            {% else %}
+            <div
+              class="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-gray-600"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            {% endif %}
+            <div class="ml-3">
+              <h4 class="font-medium text-gray-900">
+                {{ booking.guide.name }}
+              </h4>
+              <p class="text-sm text-gray-600">
+                {{ booking.guide.get_specialization_display }} Guide
+              </p>
+            </div>
+          </div>
+
+          <!-- Booking Details -->
+          <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Booking ID:</span>
+              <span class="font-medium">{{ booking.booking_id }}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Customer:</span>
+              <span class="font-medium">{{ booking.customer_name }}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Start Date:</span>
+              <span class="font-medium"
+                >{{ booking.start_date|date:"M d, Y" }}</span
+              >
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">End Date:</span>
+              <span class="font-medium"
+                >{{ booking.end_date|date:"M d, Y" }}</span
+              >
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Duration:</span>
+              <span class="font-medium"
+                >{{ booking.get_total_days }} day{{
+                booking.get_total_days|pluralize }}</span
+              >
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Group Size:</span>
+              <span class="font-medium"
+                >{{ booking.group_size }} person{{ booking.group_size|pluralize
+                }}</span
+              >
+            </div>
+          </div>
+
+          <!-- Price Breakdown -->
+          <div class="border-t pt-4">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-gray-600">Daily Rate:</span>
+              <span>৳{{ booking.guide.daily_rate }}</span>
+            </div>
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-gray-600">Days:</span>
+              <span>{{ booking.get_total_days }}</span>
+            </div>
+            <div
+              class="flex justify-between font-semibold text-lg border-t pt-2"
+            >
+              <span>Total:</span>
+              <span>৳{{ booking.total_amount|floatformat:0 }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add any payment processing JavaScript here
+  document
+    .getElementById("paymentForm")
+    .addEventListener("submit", function (e) {
+      const submitButton = this.querySelector('button[type="submit"]');
+      submitButton.innerHTML =
+        '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Processing Payment...';
+      submitButton.disabled = true;
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Confirmed - {{ booking.booking_id }}{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Success Message -->
+    <div class="text-center mb-8">
+      <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+        <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
+      <p class="text-lg text-gray-600">Your payment has been processed successfully</p>
+    </div>
+
+    <!-- Booking Details Card -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="bg-green-600 px-6 py-4">
+        <h2 class="text-xl font-semibold text-white">Booking Details</h2>
+      </div>
+      
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Left Column -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Trip Information</h3>
+            <div class="space-y-3">
+              <div>
+                <span class="text-sm font-medium text-gray-500">Booking ID:</span>
+                <p class="text-lg font-semibold text-gray-900">{{ booking.booking_id }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Guide:</span>
+                <p class="text-lg text-gray-900">{{ booking.guide.name }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Specialization:</span>
+                <p class="text-lg text-gray-900">{{ booking.guide.get_specialization_display }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Location:</span>
+                <p class="text-lg text-gray-900">{{ booking.guide.location }}, {{ booking.guide.district }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Trip Duration:</span>
+                <p class="text-lg text-gray-900">{{ booking.start_date|date:"M d, Y" }} - {{ booking.end_date|date:"M d, Y" }} ({{ booking.get_total_days }} day{{ booking.get_total_days|pluralize }})</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Group Size:</span>
+                <p class="text-lg text-gray-900">{{ booking.group_size }} person{{ booking.group_size|pluralize }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Customer Information</h3>
+            <div class="space-y-3">
+              <div>
+                <span class="text-sm font-medium text-gray-500">Name:</span>
+                <p class="text-lg text-gray-900">{{ booking.customer_name }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Email:</span>
+                <p class="text-lg text-gray-900">{{ booking.customer_email }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Phone:</span>
+                <p class="text-lg text-gray-900">{{ booking.customer_phone }}</p>
+              </div>
+              
+              <h3 class="text-lg font-semibold text-gray-900 mb-4 pt-4">Payment Information</h3>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Transaction ID:</span>
+                <p class="text-lg text-gray-900">{{ booking.transaction_id }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Amount Paid:</span>
+                <p class="text-2xl font-bold text-green-600">৳{{ booking.total_amount|floatformat:0 }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Payment Status:</span>
+                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                  {{ booking.get_payment_status_display }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Special Requirements -->
+        {% if booking.special_requirements %}
+        <div class="mt-6 pt-6 border-t">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Special Requirements</h3>
+          <p class="text-gray-700 bg-gray-50 p-4 rounded-lg">{{ booking.special_requirements }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Guide Contact Information -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact Your Guide</h3>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          {% if booking.guide.profile_image %}
+            <img src="{{ booking.guide.profile_image.url }}" alt="{{ booking.guide.name }}" class="w-16 h-16 rounded-full object-cover">
+          {% else %}
+            <div class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
+              <svg class="w-8 h-8 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          {% endif %}
+          <div class="ml-4">
+            <h4 class="text-xl font-semibold text-gray-900">{{ booking.guide.name }}</h4>
+            <p class="text-gray-600">{{ booking.guide.get_specialization_display }} Guide</p>
+            <div class="flex items-center mt-1">
+              <div class="flex items-center">
+                {% for i in "12345" %}
+                  {% if booking.guide.rating >= i|floatformat:0 %}
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  {% else %}
+                    <svg class="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  {% endif %}
+                {% endfor %}
+                <span class="ml-1 text-sm text-gray-600">{{ booking.guide.rating }}/5.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="tel:{{ booking.guide.phone }}" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+            </svg>
+            Call
+          </a>
+          {% if booking.guide.email %}
+          <a href="mailto:{{ booking.guide.email }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+            </svg>
+            Email
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Important Information -->
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+      <h3 class="text-lg font-semibold text-blue-900 mb-3">Important Information</h3>
+      <ul class="space-y-2 text-blue-800">
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          A confirmation email has been sent to {{ booking.customer_email }}
+        </li>
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Your guide will contact you within 24 hours to finalize the itinerary
+        </li>
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Please arrive at the meeting point 15 minutes early on your start date
+        </li>
+        <li class="flex items-start">
+          <svg class="w-5 h-5 mr-2 mt-0.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          For cancellations, please contact us at least 48 hours in advance
+        </li>
+      </ul>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center space-y-4">
+      <div class="space-x-4">
+        <a href="{% url 'hire_guide:guides' %}" class="inline-flex items-center px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition duration-200">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Browse More Guides
+        </a>
+        <button onclick="window.print()" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H3a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H7a2 2 0 00-2 2v4a2 2 0 002 2z"></path>
+          </svg>
+          Print Confirmation
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

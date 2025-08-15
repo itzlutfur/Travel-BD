@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import Guide
+from django.contrib import messages
+from django.utils import timezone
+from datetime import datetime
+from .models import Guide, Booking
 
 
 def guide_list(request):
@@ -55,7 +58,90 @@ def guide_list(request):
 
 def guide_detail(request, slug):
     guide = get_object_or_404(Guide, slug=slug, is_active=True)
+    
+    if request.method == 'POST':
+        # Process booking form
+        try:
+            customer_name = request.POST.get('customer_name')
+            customer_email = request.POST.get('customer_email')
+            customer_phone = request.POST.get('customer_phone')
+            start_date = datetime.strptime(request.POST.get('start_date'), '%Y-%m-%d').date()
+            end_date = datetime.strptime(request.POST.get('end_date'), '%Y-%m-%d').date()
+            group_size = int(request.POST.get('group_size', 1))
+            special_requirements = request.POST.get('special_requirements', '')
+            
+            # Calculate total amount
+            total_days = (end_date - start_date).days + 1
+            total_amount = total_days * guide.daily_rate
+            
+            # Validate dates
+            if start_date <= timezone.now().date():
+                messages.error(request, 'Start date must be in the future.')
+                return render(request, 'guide_detail.html', {'guide': guide})
+            
+            if end_date <= start_date:
+                messages.error(request, 'End date must be after start date.')
+                return render(request, 'guide_detail.html', {'guide': guide})
+            
+            # Create booking
+            booking = Booking.objects.create(
+                guide=guide,
+                customer_name=customer_name,
+                customer_email=customer_email,
+                customer_phone=customer_phone,
+                start_date=start_date,
+                end_date=end_date,
+                group_size=group_size,
+                special_requirements=special_requirements,
+                total_amount=total_amount,
+            )
+            
+            # Redirect to payment page
+            return redirect('hire_guide:booking_payment', booking_id=booking.booking_id)
+            
+        except Exception as e:
+            messages.error(request, f'Error creating booking: {str(e)}')
+    
     context = {
         'guide': guide,
+        'today': timezone.now().date(),
     }
     return render(request, 'guide_detail.html', context)
+
+
+def booking_payment(request, booking_id):
+    booking = get_object_or_404(Booking, booking_id=booking_id, payment_status='pending')
+    
+    if request.method == 'POST':
+        # Process payment
+        payment_method = request.POST.get('payment_method')
+        
+        # Here you would integrate with actual payment gateway
+        # For demo purposes, we'll simulate payment processing
+        
+        if payment_method in ['bkash', 'nagad', 'rocket', 'card']:
+            # Simulate successful payment
+            import uuid
+            booking.transaction_id = str(uuid.uuid4())[:12].upper()
+            booking.payment_status = 'completed'
+            booking.status = 'confirmed'
+            booking.save()
+            
+            messages.success(request, 'Payment successful! Your booking has been confirmed.')
+            return redirect('hire_guide:booking_confirmation', booking_id=booking.booking_id)
+        else:
+            messages.error(request, 'Please select a valid payment method.')
+    
+    context = {
+        'booking': booking,
+    }
+    return render(request, 'booking_payment.html', context)
+
+
+def booking_confirmation(request, booking_id):
+    booking = get_object_or_404(Booking, booking_id=booking_id, payment_status='completed')
+    
+    context = {
+        'booking': booking,
+    }
+    return render(request, 'booking_confirmation.html', context)

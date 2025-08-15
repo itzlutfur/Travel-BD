@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import User
+import random
+import string
 
 
 class Guide(models.Model):
@@ -58,3 +61,60 @@ class Guide(models.Model):
     
     class Meta:
         ordering = ['-rating', 'name']
+
+
+class Booking(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending Payment'),
+        ('confirmed', 'Payment Confirmed'),
+        ('cancelled', 'Cancelled'),
+        ('completed', 'Completed'),
+    ]
+    
+    PAYMENT_STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+        ('refunded', 'Refunded'),
+    ]
+    
+    # Booking Details
+    booking_id = models.CharField(max_length=20, unique=True, blank=True)
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, related_name='bookings')
+    customer_name = models.CharField(max_length=200)
+    customer_email = models.EmailField()
+    customer_phone = models.CharField(max_length=15)
+    
+    # Trip Details
+    start_date = models.DateField()
+    end_date = models.DateField()
+    group_size = models.PositiveIntegerField(default=1)
+    special_requirements = models.TextField(blank=True)
+    
+    # Payment Details
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    transaction_id = models.CharField(max_length=100, blank=True)
+    
+    # Status
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.booking_id:
+            # Generate unique booking ID
+            self.booking_id = 'BK' + ''.join(random.choices(string.digits, k=8))
+        super().save(*args, **kwargs)
+    
+    def get_total_days(self):
+        return (self.end_date - self.start_date).days + 1
+    
+    def __str__(self):
+        return f"Booking {self.booking_id} - {self.guide.name} by {self.customer_name}"
+    
+    class Meta:
+        ordering = ['-created_at']

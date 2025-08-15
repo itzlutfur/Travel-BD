@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Count
-from tour_booking.models import TourBooking, LocalGuideBooking
+from tour_booking.models import TourBooking
+from hire_guide.models import Booking
 
 @login_required
 def dashboard(request):
@@ -9,7 +10,7 @@ def dashboard(request):
     
     # These queries ONLY get data for the authenticated user
     tour_bookings = TourBooking.objects.filter(user=user).select_related('destination', 'payment').order_by('-booking_date')
-    guide_bookings = LocalGuideBooking.objects.filter(user=user).order_by('-booking_date')
+    guide_bookings = Booking.objects.filter(user=user).order_by('-booking_date')
     
     # All calculations are based on the filtered data for this user only
     tour_total = tour_bookings.aggregate(total=Sum('total_amount'))['total'] or 0
