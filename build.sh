@@ -25,4 +25,7 @@ else:
     print('Superuser already exists')
 "
 
+python manage.py create_demo_guides
+python manage.py add_sample_destinations
+
 echo "Build completed successfully!"
