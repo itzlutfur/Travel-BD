@@ -27,15 +27,15 @@
   </head>
 
   <body class="bg-white flex flex-col items-center font-sans">
-    <header class="w-full lg:w-4/5 mx-auto">
+    <header class="w-full mx-auto container">
       <nav
         class="flex items-center justify-between py-4 px-4 lg:px-8 relative z-20"
       >
         <!-- Logo -->
         <div
-          class="text-xl lg:text-2xl font-extrabold text-gray-800 uppercase tracking-wide"
+          class="w-32 text-xl lg:text-2xl font-extrabold text-gray-800 uppercase tracking-wide"
         >
-          TRAVEL BD
+          <img src="{% static 'images/logo.png' %}" alt="Travel BD Logo">
         </div>
 
         <!-- Hamburger Menu -->
@@ -149,7 +149,7 @@
           <div class="bg-white w-80 h-full ml-auto flex flex-col shadow-xl">
             <!-- Mobile Menu Header -->
             <div class="flex justify-between items-center p-4 border-b">
-              <span class="text-lg font-bold text-gray-800">TRAVEL BD</span>
+              <span class="w-24 text-lg font-bold text-gray-800"><img src="{% static 'images/logo.png' %}" alt="Travel BD Logo"></span>
               <button class="close-menu text-2xl text-gray-600" id="closeMenu">
                 <i class="fas fa-times"></i>
               </button>
